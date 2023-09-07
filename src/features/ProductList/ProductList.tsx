@@ -8,7 +8,7 @@ type ProductListProps = {
 export function ProductList({ products, ...props }: ProductListProps) {
 	return (
 		<ul
-			className="mx-auto grid w-fit sm:grid-cols-2 sm:gap-6 md:grid-cols-3 xl:grid-cols-4"
+			className="mx-auto grid w-fit gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
 			{...props}
 		>
 			{products.map((product) => (
