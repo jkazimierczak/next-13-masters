@@ -43,6 +43,12 @@
 
 		"import/no-duplicates": ["error", { "prefer-inline": true }],
 
+        // disallow import from next/router
+        "no-restricted-imports": [
+          "error",
+          "next/router"
+        ],
+
 		// false negatives
 		"import/namespace": ["off"],
 
