@@ -28,7 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 						</li>
 					</ul>
 				</nav>
-				{children}
+				<main>{children}</main>
 				<footer className="w-full border-t border-neutral-300 bg-neutral-100 py-4 text-center">
 					©2023
 				</footer>
