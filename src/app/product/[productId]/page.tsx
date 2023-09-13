@@ -1,6 +1,7 @@
 import { ProductImage } from "@/features/ProductList/ProductImage";
 import { ProductList } from "@/features/ProductList/ProductList";
 import { formatPrice } from "@/utils/formatPrice";
+import { getProductById } from "@/api/products";
 
 type ProductPageProps = {
 	params: {
@@ -8,38 +9,24 @@ type ProductPageProps = {
 	};
 };
 
-const product = {
-	name: "Dragon Chain Bracelet",
-	category: "Accessory",
-	price: 1800,
-	image: {
-		src: "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg",
-		alt: "Chain bracelet with dragon",
-		width: 300,
-		height: 200,
-	},
-};
+export default async function ProductPage({ params: { productId } }: ProductPageProps) {
+	const product = await getProductById(productId);
 
-export default function ProductPage({ params: { productId } }: ProductPageProps) {
 	return (
 		<>
 			<div className="mb-10 grid-cols-2 gap-8 md:grid">
 				<div className="mb-3 h-fit w-full overflow-hidden border">
 					<div className="mx-auto w-fit">
-						<ProductImage {...product.image} />
+						<ProductImage src={product.image} alt={product.title} width={500} height={500} />
 					</div>
 				</div>
 				<div>
-					<h1 className="mb-2 text-2xl font-bold sm:text-3xl lg:text-4xl">{product.name}</h1>
+					<h1 className="mb-2 text-2xl font-bold sm:text-3xl lg:text-4xl">{product.title}</h1>
 					<p className="mb-6">{formatPrice(product.price)}</p>
 					<button className="mb-6 w-full rounded bg-black py-2 text-center font-semibold text-white">
 						Add to cart
 					</button>
-					<p className="md:text-justify">
-						Lorem ipsum dolor sit amet consectetur. Proin tristique nec mauris pulvinar. Ut molestie
-						libero volutpat eget habitant varius viverra urna. Mauris sollicitudin quis quam urna
-						rhoncus commodo semper. Morbi phasellus dolor elit ipsum non.
-					</p>
+					<p className="md:text-justify">{product.longDescription}</p>
 				</div>
 			</div>
 

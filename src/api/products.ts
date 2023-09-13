@@ -12,3 +12,8 @@ export async function getProducts(_page: number) {
 	const res = await fetch(`${API_URL.origin}${API_URL.pathname}?${urlQueryParams}`);
 	return (await res.json()) as Product[];
 }
+
+export async function getProductById(productId: string) {
+	const res = await fetch(`${API_URL.toString()}/${productId}`);
+	return (await res.json()) as Product;
+}
