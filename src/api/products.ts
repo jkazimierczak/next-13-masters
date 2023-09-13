@@ -15,5 +15,9 @@ export async function getProducts(_page: number) {
 
 export async function getProductById(productId: string) {
 	const res = await fetch(`${API_URL.toString()}/${productId}`);
-	return (await res.json()) as Product;
+	try {
+		return (await res.json()) as Product;
+	} catch (e) {
+		return null;
+	}
 }

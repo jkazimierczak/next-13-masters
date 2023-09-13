@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import { ProductImage } from "@/features/ProductList/ProductImage";
 import { ProductList } from "@/features/ProductList/ProductList";
 import { formatPrice } from "@/utils/formatPrice";
@@ -11,6 +12,10 @@ type ProductPageProps = {
 
 export default async function ProductPage({ params: { productId } }: ProductPageProps) {
 	const product = await getProductById(productId);
+
+	if (!product) {
+		notFound();
+	}
 
 	return (
 		<>
