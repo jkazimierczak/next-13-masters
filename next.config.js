@@ -1,10 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	images: {
-		domains: ["fakestoreapi.com"],
+		domains: ["naszsklep-api.vercel.app"],
 	},
 	experimental: {
 		typedRoutes: true,
+	},
+	rewrites: () => {
+		return [
+			{
+				source: "/products",
+				destination: "/products/1",
+			},
+		];
 	},
 };
 

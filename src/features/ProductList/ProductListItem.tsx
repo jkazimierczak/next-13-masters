@@ -7,16 +7,16 @@ type ProductListItemProps = {
 };
 
 export function ProductListItem({
-	product: { name, category, price, image },
+	product: { title, category, price, image },
 }: ProductListItemProps) {
 	return (
 		<li className="inline-block w-fit sm:w-72">
 			<article>
 				<div className="overflow-hidden rounded border border-neutral-300">
-					<ProductImage src={image.src} alt={image.alt} height={image.height} width={image.width} />
+					<ProductImage src={image} alt={title} height={500} width={500} />
 				</div>
 				<div className="my-1 flex justify-between">
-					<h3 className="text-xl font-bold">{name}</h3>
+					<h3 className="text-xl font-bold">{title}</h3>
 				</div>
 				<p>{formatPrice(price)}</p>
 				<p hidden={true}>{category}</p>

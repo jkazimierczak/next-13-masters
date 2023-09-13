@@ -12,7 +12,7 @@ export function ProductList({ products, ...props }: ProductListProps) {
 			{...props}
 		>
 			{products.map((product) => (
-				<ProductListItem key={product.name} product={product} />
+				<ProductListItem key={product.id} product={product} />
 			))}
 		</ul>
 	);

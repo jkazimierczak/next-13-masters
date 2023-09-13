@@ -1,13 +1,15 @@
 export type Product = {
-	name: string;
-	category: string;
+	id: string;
+	title: string;
 	price: number;
-	image: ProductImage;
+	description: string;
+	category: string;
+	rating: Rating;
+	image: string;
+	longDescription: string;
 };
 
-export type ProductImage = {
-	width: number;
-	height: number;
-	src: string;
-	alt: string;
-};
+export interface Rating {
+	rate: number;
+	count: number;
+}
