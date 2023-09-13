@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Layout) {
 	return (
 		<html lang="pl">
-			<body className={inter.className}>
+			<body className={`${inter.className} flex h-screen flex-col`}>
 				<nav className="w-full border-b border-neutral-300 bg-neutral-100 py-4">
 					<ul className="mx-auto flex w-fit gap-6">
 						<li>
@@ -29,7 +29,7 @@ export default function RootLayout({ children }: Layout) {
 						</li>
 					</ul>
 				</nav>
-				<main>{children}</main>
+				<main className="flex-grow">{children}</main>
 				<footer className="w-full border-t border-neutral-300 bg-neutral-100 py-4 text-center">
 					©2023
 				</footer>
