@@ -43,4 +43,20 @@ describe("ActiveLink", () => {
 		expect(isLinkActive({ href: "/products", exact: true })).toBeTruthy();
 		expect(isLinkActive({ href: "/products", exact: false })).toBeTruthy();
 	});
+
+	it("matches paths with #id", () => {
+		goTo("/products#some-id");
+		expect(isLinkActive({ href: "/products", exact: true })).toBeTruthy();
+		expect(isLinkActive({ href: "/products", exact: false })).toBeTruthy();
+	});
+
+	it("matches paths with #id and query params", () => {
+		goTo("/products#some-id?key=value");
+		expect(isLinkActive({ href: "/products", exact: true })).toBeTruthy();
+		expect(isLinkActive({ href: "/products", exact: false })).toBeTruthy();
+
+		goTo("/products/1#some-id?key=value");
+		expect(isLinkActive({ href: "/products", exact: true })).toBeFalsy();
+		expect(isLinkActive({ href: "/products", exact: false })).toBeTruthy();
+	});
 });
