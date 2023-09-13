@@ -1,5 +1,6 @@
 import { type Product } from "./types";
 import { ProductImage } from "./ProductImage";
+import { formatPrice } from "@/utils/formatPrice";
 
 type ProductListItemProps = {
 	product: Product;
@@ -17,9 +18,7 @@ export function ProductListItem({
 				<div className="my-1 flex justify-between">
 					<h3 className="text-xl font-bold">{name}</h3>
 				</div>
-				<p>
-					{Intl.NumberFormat("pl-PL", { style: "currency", currency: "PLN" }).format(price / 100)}
-				</p>
+				<p>{formatPrice(price)}</p>
 				<p hidden={true}>{category}</p>
 			</article>
 		</li>
