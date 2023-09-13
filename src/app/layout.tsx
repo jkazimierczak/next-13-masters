@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { ActiveLink } from "@/features/ActiveLink/ActiveLink";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,7 +13,26 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="pl">
-			<body className={inter.className}>{children}</body>
+			<body className={inter.className}>
+				<nav className="w-full border-b border-neutral-300 bg-neutral-100 py-4">
+					<ul className="mx-auto flex w-fit gap-6">
+						<li>
+							<ActiveLink href={"/"} exact={true}>
+								Home
+							</ActiveLink>
+						</li>
+						<li>
+							<ActiveLink href={"/products"} exact={false}>
+								All
+							</ActiveLink>
+						</li>
+					</ul>
+				</nav>
+				{children}
+				<footer className="w-full border-t border-neutral-300 bg-neutral-100 py-4 text-center">
+					©2023
+				</footer>
+			</body>
 		</html>
 	);
 }
