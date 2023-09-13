@@ -1,7 +1,11 @@
 import Image from "next/image";
-import { type ProductImage } from "./types";
 
-type ProductImageProps = ProductImage;
+type ProductImageProps = {
+	width: number;
+	height: number;
+	src: string;
+	alt: string;
+};
 
 export function ProductImage({ src, alt, width, height, ...props }: ProductImageProps) {
 	return (
