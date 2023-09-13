@@ -3,6 +3,9 @@ const nextConfig = {
 	images: {
 		domains: ["fakestoreapi.com"],
 	},
+	experimental: {
+		typedRoutes: true,
+	},
 };
 
 module.exports = nextConfig;
