@@ -2,12 +2,12 @@ import { type Route } from "next";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
-type UseActiveLinkParams = {
-	href: Route;
+type UseActiveLinkParams<T extends string> = {
+	href: Route<T>;
 	exact: boolean;
 };
 
-function createRegExp({ href, exact }: UseActiveLinkParams) {
+function createRegExp<T extends string>({ href, exact }: UseActiveLinkParams<T>) {
 	if (exact) {
 		return new RegExp(`^/href(?:/?|#.*|\\?.*)$`.replace("/href", href));
 	} else {
@@ -15,7 +15,7 @@ function createRegExp({ href, exact }: UseActiveLinkParams) {
 	}
 }
 
-export function isLinkActive({ href, exact }: UseActiveLinkParams) {
+export function isLinkActive<T extends string>({ href, exact }: UseActiveLinkParams<T>) {
 	const pathname = window.location.href.replace(window.location.origin, "");
 	const regex = createRegExp({ href, exact });
 
@@ -23,7 +23,7 @@ export function isLinkActive({ href, exact }: UseActiveLinkParams) {
 	return !!match;
 }
 
-export function useActiveLink({ href, exact }: UseActiveLinkParams) {
+export function useActiveLink<T extends string>({ href, exact }: UseActiveLinkParams<T>) {
 	const [isActive, setIsActive] = useState(false);
 	const pathname = usePathname();
 
