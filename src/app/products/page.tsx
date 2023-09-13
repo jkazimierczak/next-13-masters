@@ -51,7 +51,9 @@ const products: Product[] = [
 export default function Home() {
 	return (
 		<main className="p-8">
-			<ProductList products={products} data-testid="products-list" />
+			<div className="mx-auto w-fit">
+				<ProductList products={products} data-testid="products-list" />
+			</div>
 		</main>
 	);
 }

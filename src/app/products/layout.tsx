@@ -5,5 +5,5 @@ export const metadata: Metadata = {
 };
 
 export default function ProductsLayout({ children }: { children: React.ReactNode }) {
-	return children;
+	return <main className="mx-auto max-w-screen-2xl">{children}</main>;
 }
