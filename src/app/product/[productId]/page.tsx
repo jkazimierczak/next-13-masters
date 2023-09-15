@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { type Metadata } from "next";
 import { ProductImage } from "@/features/ProductList/ProductImage";
 import { ProductList } from "@/features/ProductList/ProductList";
 import { formatPrice } from "@/utils/formatPrice";
@@ -7,6 +8,16 @@ import { getProductById } from "@/api/products";
 type ProductPageProps = {
 	params: {
 		productId: string;
+	};
+};
+
+export const generateMetadata = async ({
+	params: { productId },
+}: ProductPageProps): Promise<Metadata> => {
+	const product = await getProductById(productId);
+
+	return {
+		title: product?.title,
 	};
 };
 
