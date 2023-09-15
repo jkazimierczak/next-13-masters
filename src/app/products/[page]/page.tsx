@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { clsx } from "clsx";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { ProductList } from "@/features/ProductList/ProductList";
 import { getProducts } from "@/api/products";
 
@@ -35,13 +36,13 @@ export default async function ProductsPage({ params: { page } }: ProductsPagePro
 			<div className="mx-auto w-fit">
 				<nav className="flex gap-4" aria-label="pagination">
 					<Link href={prevPageLink} className={clsx(isPrevPageLinkDisabled && "text-neutral-300")}>
-						Prev
+						<ArrowLeft />
 					</Link>
 					<p>
 						{page} of {PAGES}
 					</p>
 					<Link href={nextPageLink} className={clsx(isNextPageLinkDisabled && "text-neutral-300")}>
-						Prev
+						<ArrowRight />
 					</Link>
 				</nav>
 				<ProductList products={products} data-testid="products-list" />
