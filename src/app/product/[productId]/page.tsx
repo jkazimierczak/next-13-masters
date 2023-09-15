@@ -17,7 +17,7 @@ export const generateMetadata = async ({
 	const product = await getProductById(productId);
 
 	return {
-		title: product?.title,
+		title: product?.title ?? "Product not found",
 	};
 };
 

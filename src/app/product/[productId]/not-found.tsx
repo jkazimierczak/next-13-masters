@@ -1,4 +1,13 @@
 import Link from "next/link";
+import { type Metadata } from "next";
+
+export const metadata: Metadata = {
+	// title: "Product not found",  // TODO: https://github.com/vercel/next.js/issues/45620
+	robots: {
+		index: false,
+		follow: true,
+	},
+};
 
 export default function NotFound() {
 	return (
