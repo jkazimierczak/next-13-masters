@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { clsx } from "clsx";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { type Metadata } from "next";
 import { ProductList } from "@/features/ProductList/ProductList";
 import { getProducts } from "@/api/products";
 
@@ -13,6 +14,12 @@ type ProductsPageProps = {
 		page: string;
 	};
 };
+
+export async function generateMetadata({ params: { page } }: ProductsPageProps): Promise<Metadata> {
+	return {
+		title: `Products - page ${page}`,
+	};
+}
 
 export default async function ProductsPage({ params: { page } }: ProductsPageProps) {
 	const pageNum = Number(page);
