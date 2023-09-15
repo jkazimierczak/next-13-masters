@@ -2,7 +2,7 @@ import Link from "next/link";
 import { type Metadata } from "next";
 
 export const metadata: Metadata = {
-	// title: "Product not found",  // TODO: https://github.com/vercel/next.js/issues/45620
+	title: "Product not found",
 	robots: {
 		index: false,
 		follow: true,
