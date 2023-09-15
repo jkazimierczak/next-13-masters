@@ -29,7 +29,7 @@ export default function RootLayout({ children }: Layout) {
 						</li>
 					</ul>
 				</nav>
-				<main className="flex-grow">{children}</main>
+				<div className="h-full flex-grow">{children}</div>
 				<footer className="w-full border-t border-neutral-300 bg-neutral-100 py-4 text-center">
 					©2023
 				</footer>
