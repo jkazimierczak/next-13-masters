@@ -23,10 +23,12 @@ export default async function ProductsPage({ params: { page } }: ProductsPagePro
 	const products = await getProducts(pageNum);
 
 	const isPrevPageLinkDisabled = pageNum === 1;
-	const prevPageLink = isPrevPageLinkDisabled ? `/products/${pageNum}` : `/products/${pageNum - 1}`;
+	const prevPageNum = isPrevPageLinkDisabled ? pageNum : pageNum - 1;
+	const prevPageLink = `/products/${prevPageNum}` as const;
 
 	const isNextPageLinkDisabled = pageNum === PAGES;
-	const nextPageLink = isNextPageLinkDisabled ? `/products/${pageNum}` : `/products/${pageNum + 1}`;
+	const nextPageNum = isNextPageLinkDisabled ? pageNum : pageNum + 1;
+	const nextPageLink = `/products/${nextPageNum}` as const;
 
 	return (
 		<main className="mx-auto max-w-screen-2xl p-8">
