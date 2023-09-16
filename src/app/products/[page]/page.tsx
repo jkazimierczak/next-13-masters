@@ -21,6 +21,10 @@ export async function generateMetadata({ params: { page } }: ProductsPageProps):
 	};
 }
 
+export async function generateStaticParams() {
+	return Array.from({ length: 10 }, (_, i) => ({ page: String(i) }));
+}
+
 export default async function ProductsPage({ params: { page } }: ProductsPageProps) {
 	const pageNum = Number(page);
 
