@@ -16,7 +16,7 @@ export default function RootLayout({ children }: Layout) {
 		<html lang="pl">
 			<body className={`${inter.className} flex h-0 min-h-screen flex-col`}>
 				<nav className="w-full border-b border-neutral-300 bg-neutral-100 py-4">
-					<ul className="mx-auto flex w-fit gap-6">
+					<ul className="mx-auto flex w-fit gap-6" role="navigation">
 						<li>
 							<ActiveLink href={"/"} exact={true}>
 								Home
