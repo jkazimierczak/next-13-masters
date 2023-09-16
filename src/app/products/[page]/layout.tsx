@@ -6,5 +6,5 @@ export const metadata: Metadata = {
 };
 
 export default function ProductsLayout({ children }: Layout) {
-	return <main className="mx-auto max-w-screen-2xl">{children}</main>;
+	return <main className="h-full">{children}</main>;
 }
