@@ -1,14 +1,10 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
-import { clsx } from "clsx";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 import { type Metadata } from "next";
 import { ProductList } from "@/features/ProductList/ProductList";
 import { getProducts } from "@/api/products";
 import { Pagination } from "@/features/Pagination";
 
 const TOTAL_PRODUCT_COUNT = 4205;
-const PAGES = Math.ceil(TOTAL_PRODUCT_COUNT / 20);
 
 type ProductsPageProps = {
 	params: {
