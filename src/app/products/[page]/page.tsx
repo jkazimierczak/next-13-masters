@@ -45,18 +45,46 @@ export default async function ProductsPage({ params: { page } }: ProductsPagePro
 	return (
 		<main className="mx-auto max-w-screen-2xl p-8">
 			<div className="mx-auto w-fit">
-				<nav className="flex gap-4" aria-label="pagination">
-					<Link href={prevPageLink} className={clsx(isPrevPageLinkDisabled && "text-neutral-300")}>
-						<ArrowLeft />
-					</Link>
-					<p>
-						{page} of {PAGES}
-					</p>
-					<Link href={nextPageLink} className={clsx(isNextPageLinkDisabled && "text-neutral-300")}>
-						<ArrowRight />
-					</Link>
-				</nav>
+				<header className="mb-4 flex items-center justify-between">
+					<h1 className="text-3xl font-bold">Vinyl Records</h1>
+					<nav className="hidden gap-4 sm:flex" aria-label="pagination">
+						<Link
+							href={prevPageLink}
+							className={clsx(isPrevPageLinkDisabled && "text-neutral-300")}
+						>
+							<ArrowLeft />
+						</Link>
+						<p>
+							{page} of {PAGES}
+						</p>
+						<Link
+							href={nextPageLink}
+							className={clsx(isNextPageLinkDisabled && "text-neutral-300")}
+						>
+							<ArrowRight />
+						</Link>
+					</nav>
+				</header>
 				<ProductList products={products} data-testid="products-list" />
+				<div className="mt-4 flex justify-center">
+					<nav className="hidden gap-4 sm:flex" aria-label="pagination">
+						<Link
+							href={prevPageLink}
+							className={clsx(isPrevPageLinkDisabled && "text-neutral-300")}
+						>
+							<ArrowLeft />
+						</Link>
+						<p>
+							{page} of {PAGES}
+						</p>
+						<Link
+							href={nextPageLink}
+							className={clsx(isNextPageLinkDisabled && "text-neutral-300")}
+						>
+							<ArrowRight />
+						</Link>
+					</nav>
+				</div>
 			</div>
 		</main>
 	);
