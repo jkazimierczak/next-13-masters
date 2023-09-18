@@ -18,7 +18,7 @@ export function ActiveLink<T extends string>({ children, href, exact }: ActiveLi
 		<Link
 			href={href}
 			className={clsx({
-				"border-b border-sky-500 text-sky-500": isActive,
+				"border-b border-primary text-primary": isActive,
 			})}
 		>
 			{children}

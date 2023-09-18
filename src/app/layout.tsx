@@ -1,6 +1,8 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Image from "next/image";
+import Link from "next/link";
 import { ActiveLink } from "@/features/ActiveLink/ActiveLink";
 import { type Layout } from "@/types/layout";
 
@@ -15,8 +17,11 @@ export default function RootLayout({ children }: Layout) {
 	return (
 		<html lang="pl">
 			<body className={`${inter.className} flex h-0 min-h-screen flex-col`}>
-				<nav className="w-full border-b border-neutral-300 bg-neutral-100 py-4">
-					<ul className="mx-auto flex w-fit gap-6" role="navigation">
+				<nav className="bg-background sticky flex w-full items-center justify-between px-5 py-4 text-white shadow md:px-12 lg:px-24">
+					<Link href="/">
+						<Image width={36} height={36} src="/logo.svg" alt="Logo" />
+					</Link>
+					<ul className="flex w-fit gap-6" role="navigation">
 						<li>
 							<ActiveLink href={"/"} exact={true}>
 								Home
@@ -30,9 +35,7 @@ export default function RootLayout({ children }: Layout) {
 					</ul>
 				</nav>
 				<div className="flex-grow">{children}</div>
-				<footer className="w-full border-t border-neutral-300 bg-neutral-100 py-4 text-center">
-					©2023
-				</footer>
+				<footer className="bg-background w-full py-4 text-center text-white">©2023</footer>
 			</body>
 		</html>
 	);
