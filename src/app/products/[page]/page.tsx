@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { type Metadata } from "next";
 import { ProductList } from "@/features/ProductList/ProductList";
 import { getProducts } from "@/api/products";
+import { Pagination } from "@/features/Pagination";
 
 const TOTAL_PRODUCT_COUNT = 4205;
 const PAGES = Math.ceil(TOTAL_PRODUCT_COUNT / 20);
@@ -34,56 +35,28 @@ export default async function ProductsPage({ params: { page } }: ProductsPagePro
 
 	const products = await getProducts(pageNum);
 
-	const isPrevPageLinkDisabled = pageNum === 1;
-	const prevPageNum = isPrevPageLinkDisabled ? pageNum : pageNum - 1;
-	const prevPageLink = `/products/${prevPageNum}` as const;
-
-	const isNextPageLinkDisabled = pageNum === PAGES;
-	const nextPageNum = isNextPageLinkDisabled ? pageNum : pageNum + 1;
-	const nextPageLink = `/products/${nextPageNum}` as const;
-
 	return (
 		<main className="mx-auto max-w-screen-2xl p-8">
 			<div className="mx-auto w-fit">
 				<header className="mb-4 flex items-center justify-between">
 					<h1 className="text-3xl font-bold">Vinyl Records</h1>
-					<nav className="hidden gap-4 sm:flex" aria-label="pagination">
-						<Link
-							href={prevPageLink}
-							className={clsx(isPrevPageLinkDisabled && "text-neutral-300")}
-						>
-							<ArrowLeft />
-						</Link>
-						<p>
-							{page} of {PAGES}
-						</p>
-						<Link
-							href={nextPageLink}
-							className={clsx(isNextPageLinkDisabled && "text-neutral-300")}
-						>
-							<ArrowRight />
-						</Link>
-					</nav>
+					<div className="hidden sm:block">
+						<Pagination
+							currentPage={pageNum}
+							itemsPerPage={20}
+							totalItems={TOTAL_PRODUCT_COUNT}
+							link={"/products"}
+						/>
+					</div>
 				</header>
 				<ProductList products={products} data-testid="products-list" />
 				<div className="mt-4 flex justify-center">
-					<nav className="hidden gap-4 sm:flex" aria-label="pagination">
-						<Link
-							href={prevPageLink}
-							className={clsx(isPrevPageLinkDisabled && "text-neutral-300")}
-						>
-							<ArrowLeft />
-						</Link>
-						<p>
-							{page} of {PAGES}
-						</p>
-						<Link
-							href={nextPageLink}
-							className={clsx(isNextPageLinkDisabled && "text-neutral-300")}
-						>
-							<ArrowRight />
-						</Link>
-					</nav>
+					<Pagination
+						currentPage={pageNum}
+						itemsPerPage={20}
+						totalItems={TOTAL_PRODUCT_COUNT}
+						link={"/products"}
+					/>
 				</div>
 			</div>
 		</main>
