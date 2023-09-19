@@ -13,5 +13,9 @@ export default async function MdxPage({ params: { filename } }: MdxPageProps) {
 		() => notFound(),
 	);
 
-	return <Page />;
+	return (
+		<article className="prose mx-auto my-10">
+			<Page />
+		</article>
+	);
 }
