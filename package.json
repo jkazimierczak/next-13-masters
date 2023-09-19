@@ -10,7 +10,8 @@
     "lint": "next lint --fix --dir src",
     "test": "playwright test 2.spec.ts",
     "test:features": "vitest src/features",
-    "codegen": "graphql-codegen --config .graphqlrc.js"
+    "codegen": "graphql-codegen --config .graphqlrc.js",
+    "codegen:watch": "graphql-codegen --config .graphqlrc.js --watch"
   },
   "dependencies": {
     "@mdx-js/loader": "^2.3.0",
@@ -37,6 +38,7 @@
     "@graphql-codegen/cli": "5.0.0",
     "@graphql-codegen/client-preset": "4.1.0",
     "@next/env": "^13.5.1",
+    "@parcel/watcher": "^2.3.0",
     "@playwright/test": "^1.37.1",
     "@tailwindcss/typography": "^0.5.10",
     "@types/envinfo": "^7.8.1",
