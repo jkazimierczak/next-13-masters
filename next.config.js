@@ -3,8 +3,10 @@ const nextConfig = {
 	images: {
 		domains: ["naszsklep-api.vercel.app"],
 	},
+	pageExtensions: ["ts", "tsx", "mdx"],
 	experimental: {
 		typedRoutes: true,
+		mdxRs: true,
 	},
 	compiler: {
 		removeConsole: {
@@ -21,4 +23,5 @@ const nextConfig = {
 	},
 };
 
-module.exports = nextConfig;
+const withMDX = require("@next/mdx")();
+module.exports = withMDX(nextConfig);
