@@ -10,7 +10,7 @@
     "lint": "next lint --fix --dir src",
     "test": "playwright test 2.spec.ts",
     "test:features": "vitest src/features",
-    "codegen": "graphql-codegen --config .graphqlrc.ts"
+    "codegen": "graphql-codegen --config .graphqlrc.js"
   },
   "dependencies": {
     "@mdx-js/loader": "^2.3.0",
