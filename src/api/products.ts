@@ -5,16 +5,19 @@ import {
 	ProductsGetByCategorySlugDocument,
 	ProductsGetCountByCategorySlugDocument,
 	ProductsGetCountDocument,
-	ProductsGetListDocument,
+	ProductsGetDocument,
+	type ProductsGetQuery,
 } from "@/gql/graphql";
 
-export async function getProducts(page: number): Promise<Product[]> {
-	const gqlRes = await executeGraphql(ProductsGetListDocument, {
+function preparePaginationArgs(page: number) {
+	return {
 		count: 20,
 		offset: 20 * (page - 1),
-	});
+	};
+}
 
-	return gqlRes.products.map((p) => {
+function mapGqlProductsToProducts(products: ProductsGetQuery["products"]) {
+	return products.map((p) => {
 		return {
 			id: p.id,
 			title: p.name,
@@ -29,33 +32,29 @@ export async function getProducts(page: number): Promise<Product[]> {
 	});
 }
 
-export async function getProductsByCategorySlug(slug: string, page: number) {
+export async function getProducts(page: number): Promise<Product[]> {
+	const gqlRes = await executeGraphql(ProductsGetDocument, { ...preparePaginationArgs(page) });
+
+	return mapGqlProductsToProducts(gqlRes.products);
+}
+
+export async function getProductsByCategorySlug(
+	slug: string,
+	page: number,
+): Promise<Product[] | null> {
 	const gqlRes = await executeGraphql(ProductsGetByCategorySlugDocument, {
 		slug,
-		count: 20,
-		offset: 20 * (page - 1),
+		...preparePaginationArgs(page),
 	});
 
 	if (!gqlRes.categories[0]) {
 		return null;
 	}
 
-	return gqlRes.categories[0].products.map((p) => {
-		return {
-			id: p.id,
-			title: p.name,
-			price: p.price,
-			description: p.description,
-			category: p.categories[0]?.name || "",
-			image: p.images[0] && {
-				src: p.images[0].url,
-				alt: p.name,
-			},
-		};
-	});
+	return mapGqlProductsToProducts(gqlRes.categories[0].products);
 }
 
-export async function getProductById(productId: string) {
+export async function getProductById(productId: string): Promise<Product | null> {
 	const gqlRes = await executeGraphql(ProductGetByIdDocument, { id: productId });
 	const p = gqlRes.product;
 
