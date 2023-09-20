@@ -1,8 +1,6 @@
 import { type GraphQLResponse } from "@/types/GraphQLResponse";
 import { type TypedDocumentString } from "@/gql/graphql";
 
-const token = process.env.GRAPHQL_AUTH_TOKEN || "";
-
 export async function executeGraphql<TResult, TVariables>(
 	query: TypedDocumentString<TResult, TVariables>,
 	variables: TVariables,
@@ -19,7 +17,6 @@ export async function executeGraphql<TResult, TVariables>(
 		}),
 		headers: {
 			"Content-Type": "application/json",
-			Authorization: token,
 		},
 	});
 

@@ -4,9 +4,10 @@ export type Product = {
 	price: number;
 	description: string;
 	category: string;
-	rating: Rating;
-	image: string;
-	longDescription: string;
+	image?: {
+		src: string;
+		alt: string;
+	};
 };
 
 export interface Rating {

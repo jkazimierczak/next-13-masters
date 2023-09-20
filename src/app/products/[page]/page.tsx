@@ -35,7 +35,7 @@ export default async function ProductsPage({ params: { page } }: ProductsPagePro
 		<main className="mx-auto max-w-screen-2xl p-8">
 			<div className="mx-auto w-fit">
 				<header className="mb-4 flex items-center justify-between">
-					<h1 className="text-3xl font-bold">Vinyl Records</h1>
+					<h1 className="border-b border-secondary text-3xl font-bold">Vinyl Records</h1>
 					<div className="hidden sm:block">
 						<Pagination
 							currentPage={pageNum}

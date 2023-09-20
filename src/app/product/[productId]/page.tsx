@@ -33,7 +33,14 @@ export default async function ProductPage({ params: { productId } }: ProductPage
 			<div className="mb-10 grid-cols-2 gap-8 md:grid">
 				<div className="mb-3 h-fit w-full overflow-hidden border">
 					<div className="mx-auto w-fit">
-						<ProductImage src={product.image} alt={product.title} width={500} height={500} />
+						{product.image && (
+							<ProductImage
+								src={product.image.src}
+								alt={product.image.alt}
+								width={500}
+								height={500}
+							/>
+						)}
 					</div>
 				</div>
 				<div>
@@ -42,7 +49,7 @@ export default async function ProductPage({ params: { productId } }: ProductPage
 					<button className="mb-6 w-full rounded bg-black py-2 text-center font-semibold text-white">
 						Add to cart
 					</button>
-					<p className="md:text-justify">{product.longDescription}</p>
+					<p className="md:text-justify">{product.description}</p>
 				</div>
 			</div>
 
