@@ -1,6 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
+import { type Route } from "next";
 import { ActiveLink } from "@/features/ActiveLink/ActiveLink";
+
+const links: { href: Route; name: string; exact: boolean }[] = [
+	{ href: "/", name: "Home", exact: true },
+	{ href: "/products", name: "All", exact: false },
+	{ href: "/categories/t-shirts" as Route, name: "T-Shirts", exact: false },
+];
 
 export function Navbar() {
 	return (
@@ -9,21 +16,13 @@ export function Navbar() {
 				<Image width={36} height={36} src="/logo.svg" alt="Logo" />
 			</Link>
 			<ul className="flex w-fit gap-6" role="navigation">
-				<li>
-					<ActiveLink href={"/"} exact={true}>
-						Home
-					</ActiveLink>
-				</li>
-				<li>
-					<ActiveLink href={"/products"} exact={false}>
-						All
-					</ActiveLink>
-				</li>
-				<li>
-					<ActiveLink href={"/categories/t-shirts"} exact={false}>
-						T-Shirts
-					</ActiveLink>
-				</li>
+				{links.map(({ href, name, exact }) => (
+					<li key={href}>
+						<ActiveLink href={href} exact={exact}>
+							{name}
+						</ActiveLink>
+					</li>
+				))}
 			</ul>
 		</nav>
 	);
