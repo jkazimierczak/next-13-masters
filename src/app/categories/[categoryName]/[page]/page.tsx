@@ -34,7 +34,7 @@ export default async function CategoryPage({ params: { page, categoryName } }: C
 							currentPage={pageNum}
 							itemsPerPage={20}
 							totalItems={totalProductCount}
-							link={"/products"}
+							link={`/categories/${categoryName}`}
 						/>
 					</div>
 				</header>
@@ -44,7 +44,7 @@ export default async function CategoryPage({ params: { page, categoryName } }: C
 						currentPage={pageNum}
 						itemsPerPage={20}
 						totalItems={totalProductCount}
-						link={"/products"}
+						link={`/categories/${categoryName}`}
 					/>
 				</div>
 			</div>

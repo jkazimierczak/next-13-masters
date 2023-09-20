@@ -4,7 +4,7 @@ import { ActiveLink } from "@/features/ActiveLink/ActiveLink";
 
 export function Navbar() {
 	return (
-		<nav className="bg-background sticky flex w-full items-center justify-between px-5 py-4 text-white shadow md:px-12 lg:px-24">
+		<nav className="sticky flex w-full items-center justify-between bg-background px-5 py-4 text-white shadow md:px-12 lg:px-24">
 			<Link href="/">
 				<Image width={36} height={36} src="/logo.svg" alt="Logo" />
 			</Link>
@@ -17,6 +17,11 @@ export function Navbar() {
 				<li>
 					<ActiveLink href={"/products"} exact={false}>
 						All
+					</ActiveLink>
+				</li>
+				<li>
+					<ActiveLink href={"/categories/t-shirts"} exact={false}>
+						T-Shirts
 					</ActiveLink>
 				</li>
 			</ul>
