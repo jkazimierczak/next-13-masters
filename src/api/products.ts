@@ -1,9 +1,16 @@
 import { type Product } from "@/features/ProductList/types";
 import { executeGraphql } from "@/api/graphql";
-import { ProductGetByIdDocument, ProductsGetListDocument } from "@/gql/graphql";
+import {
+	ProductGetByIdDocument,
+	ProductsGetCountDocument,
+	ProductsGetListDocument,
+} from "@/gql/graphql";
 
-export async function getProducts(_page: number): Promise<Product[]> {
-	const gqlRes = await executeGraphql(ProductsGetListDocument, {});
+export async function getProducts(page: number): Promise<Product[]> {
+	const gqlRes = await executeGraphql(ProductsGetListDocument, {
+		count: 20,
+		offset: 20 * (page - 1),
+	});
 
 	return gqlRes.products.map((p) => {
 		return {
@@ -39,4 +46,10 @@ export async function getProductById(productId: string) {
 			alt: p.name,
 		},
 	};
+}
+
+export async function getProductsCount() {
+	const gqlRes = await executeGraphql(ProductsGetCountDocument, {});
+
+	return gqlRes.productsConnection.aggregate.count;
 }

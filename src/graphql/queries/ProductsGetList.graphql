@@ -1,5 +1,5 @@
-query ProductsGetList {
-    products {
+query ProductsGetList($count: Int!, $offset: Int!) {
+    products(first: $count, skip: $offset) {
         id
         name
         price

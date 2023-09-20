@@ -1,10 +1,8 @@
 import { notFound } from "next/navigation";
 import { type Metadata } from "next";
 import { ProductList } from "@/features/ProductList/ProductList";
-import { getProducts } from "@/api/products";
+import { getProducts, getProductsCount } from "@/api/products";
 import { Pagination } from "@/features/Pagination";
-
-const TOTAL_PRODUCT_COUNT = 4205;
 
 type ProductsPageProps = {
 	params: {
@@ -30,6 +28,7 @@ export default async function ProductsPage({ params: { page } }: ProductsPagePro
 	}
 
 	const products = await getProducts(pageNum);
+	const totalProductCount = await getProductsCount();
 
 	return (
 		<main className="mx-auto max-w-screen-2xl p-8">
@@ -40,7 +39,7 @@ export default async function ProductsPage({ params: { page } }: ProductsPagePro
 						<Pagination
 							currentPage={pageNum}
 							itemsPerPage={20}
-							totalItems={TOTAL_PRODUCT_COUNT}
+							totalItems={totalProductCount}
 							link={"/products"}
 						/>
 					</div>
@@ -50,7 +49,7 @@ export default async function ProductsPage({ params: { page } }: ProductsPagePro
 					<Pagination
 						currentPage={pageNum}
 						itemsPerPage={20}
-						totalItems={TOTAL_PRODUCT_COUNT}
+						totalItems={totalProductCount}
 						link={"/products"}
 					/>
 				</div>
