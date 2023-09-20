@@ -1,6 +1,6 @@
 query ProductsGetByCategorySlug ($slug: String!, $count: Int!, $offset: Int!) {
-    categories(where: {slug: $slug}, first: $count, skip: $offset) {
-        products {
+    categories(where: {slug: $slug}) {
+        products(first: $count, skip: $offset) {
             id
             name
             price
