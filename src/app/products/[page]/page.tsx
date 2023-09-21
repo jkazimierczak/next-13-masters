@@ -3,6 +3,7 @@ import { type Metadata } from "next";
 import { ProductList } from "@/features/ProductList/ProductList";
 import { getProducts, getProductsCount } from "@/api/products";
 import { Pagination } from "@/features/Pagination";
+import { itemsPerPage } from "@/constants";
 
 type ProductsPageProps = {
 	params: {
@@ -38,7 +39,7 @@ export default async function ProductsPage({ params: { page } }: ProductsPagePro
 					<div className="hidden sm:block">
 						<Pagination
 							currentPage={pageNum}
-							itemsPerPage={20}
+							itemsPerPage={itemsPerPage}
 							totalItems={totalProductCount}
 							link={"/products"}
 						/>
@@ -48,7 +49,7 @@ export default async function ProductsPage({ params: { page } }: ProductsPagePro
 				<div className="mt-4 flex justify-center">
 					<Pagination
 						currentPage={pageNum}
-						itemsPerPage={20}
+						itemsPerPage={itemsPerPage}
 						totalItems={totalProductCount}
 						link={"/products"}
 					/>

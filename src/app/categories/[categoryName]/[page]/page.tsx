@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { getProductsByCategorySlug, getProductsCountByCategorySlug } from "@/api/products";
 import { Pagination } from "@/features/Pagination";
 import { ProductList } from "@/features/ProductList/ProductList";
+import { itemsPerPage } from "@/constants";
 
 type CategoryPageParams = {
 	params: {
@@ -32,7 +33,7 @@ export default async function CategoryPage({ params: { page, categoryName } }: C
 					<div className="hidden sm:block">
 						<Pagination
 							currentPage={pageNum}
-							itemsPerPage={20}
+							itemsPerPage={itemsPerPage}
 							totalItems={totalProductCount}
 							link={`/categories/${categoryName}`}
 						/>
@@ -42,7 +43,7 @@ export default async function CategoryPage({ params: { page, categoryName } }: C
 				<div className="mt-4 flex justify-center">
 					<Pagination
 						currentPage={pageNum}
-						itemsPerPage={20}
+						itemsPerPage={itemsPerPage}
 						totalItems={totalProductCount}
 						link={`/categories/${categoryName}`}
 					/>

@@ -8,11 +8,12 @@ import {
 	ProductsGetDocument,
 	type ProductsGetQuery,
 } from "@/gql/graphql";
+import { itemsPerPage } from "@/constants";
 
 function preparePaginationArgs(page: number) {
 	return {
-		count: 20,
-		offset: 20 * (page - 1),
+		count: itemsPerPage,
+		offset: itemsPerPage * (page - 1),
 	};
 }
 
