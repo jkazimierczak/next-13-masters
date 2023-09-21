@@ -3,7 +3,8 @@ import { type Metadata } from "next";
 import { ProductList } from "@/features/ProductList/ProductList";
 import { getProducts, getProductsCount } from "@/api/products";
 import { Pagination } from "@/features/Pagination";
-import { itemsPerPage } from "@/constants";
+import { itemsPerPage, maxSSGPages } from "@/constants";
+import { getPagesCount } from "@/features/Pagination/getPageCount";
 
 type ProductsPageProps = {
 	params: {
@@ -18,7 +19,11 @@ export async function generateMetadata({ params: { page } }: ProductsPageProps):
 }
 
 export async function generateStaticParams() {
-	return Array.from({ length: 10 }, (_, i) => ({ page: String(i) }));
+	const totalProductCount = await getProductsCount();
+	const pages = getPagesCount(totalProductCount, itemsPerPage);
+
+	const ssgPageCount = pages >= maxSSGPages ? maxSSGPages : pages;
+	return Array.from({ length: ssgPageCount }, (_, i) => ({ page: String(i) }));
 }
 
 export default async function ProductsPage({ params: { page } }: ProductsPageProps) {
