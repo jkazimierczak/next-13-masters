@@ -33,7 +33,7 @@ export default async function ProductPage({ params: { productId } }: ProductPage
 			<div className="mb-10 grid-cols-2 gap-8 md:grid">
 				<div className="mb-3 h-fit w-full overflow-hidden border">
 					<div className="mx-auto w-fit">
-						{product.images && (
+						{product.images && product.images[0] && (
 							<ProductImage
 								src={product.images[0].src}
 								alt={product.images[0].alt}

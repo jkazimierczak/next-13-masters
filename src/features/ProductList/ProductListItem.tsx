@@ -15,7 +15,7 @@ export function ProductListItem({
 			<Link href={`/product/${id}`}>
 				<article>
 					<div className="overflow-hidden rounded border border-neutral-300/50">
-						{images ? (
+						{images && images[0] ? (
 							<ProductImage src={images[0].src} alt={images[0].alt} height={500} width={500} />
 						) : (
 							<div></div>

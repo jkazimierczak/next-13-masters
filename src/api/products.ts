@@ -21,19 +21,15 @@ function preparePaginationArgs(page: number) {
 
 function mapGqlProductsToProducts(products: ProductsGetQuery["products"]) {
 	return products.map((p) => {
-		if (p.images.length >= 2) console.log(p.name, p.images.length);
-
 		return {
 			id: p.id,
 			title: p.name,
 			price: p.price,
 			category: p.categories[0]?.name || "",
-			images: [
-				p.images[0] && {
-					src: p.images[0].url,
-					alt: p.name,
-				},
-			],
+			images: p.images.map((img) => ({
+				src: img.url,
+				alt: p.name,
+			})),
 		};
 	});
 }

@@ -4,13 +4,10 @@ export type Product = {
 	price: number;
 	description?: string;
 	category: string;
-	images?: {
-		src: string;
-		alt: string;
-	}[];
+	images?: ProductImage[];
 };
 
-export interface Rating {
-	rate: number;
-	count: number;
-}
+type ProductImage = {
+	src: string;
+	alt: string;
+};
