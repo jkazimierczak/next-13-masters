@@ -23,6 +23,10 @@ const nextConfig = {
 				source: "/categories/:slug",
 				destination: "/categories/:slug/1",
 			},
+			{
+				source: "/collections/:slug",
+				destination: "/collections/:slug/1",
+			},
 		];
 	},
 };

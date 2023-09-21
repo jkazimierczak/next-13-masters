@@ -3,7 +3,9 @@ import { executeGraphql } from "@/api/graphql";
 import {
 	ProductGetByIdDocument,
 	ProductsGetByCategorySlugDocument,
+	ProductsGetByCollectionSlugDocument,
 	ProductsGetCountByCategorySlugDocument,
+	ProductsGetCountByCollectionSlugDocument,
 	ProductsGetCountDocument,
 	ProductsGetDocument,
 	type ProductsGetQuery,
@@ -58,6 +60,22 @@ export async function getProductsByCategorySlug(
 	return mapGqlProductsToProducts(gqlRes.categories[0].products);
 }
 
+export async function getProductsByCollectionSlug(
+	slug: string,
+	page: number,
+): Promise<Product[] | null> {
+	const gqlRes = await executeGraphql(ProductsGetByCollectionSlugDocument, {
+		slug,
+		...preparePaginationArgs(page),
+	});
+
+	if (!gqlRes.collections[0]) {
+		return null;
+	}
+
+	return mapGqlProductsToProducts(gqlRes.collections[0].products);
+}
+
 export async function getProductById(productId: string): Promise<Product | null> {
 	const gqlRes = await executeGraphql(ProductGetByIdDocument, { id: productId });
 	const p = gqlRes.product;
@@ -87,6 +105,12 @@ export async function getProductsCount() {
 
 export async function getProductsCountByCategorySlug(slug: string) {
 	const gqlRes = await executeGraphql(ProductsGetCountByCategorySlugDocument, { slug });
+
+	return gqlRes.productsConnection.aggregate.count;
+}
+
+export async function getProductsCountByCollectionSlug(slug: string) {
+	const gqlRes = await executeGraphql(ProductsGetCountByCollectionSlugDocument, { slug });
 
 	return gqlRes.productsConnection.aggregate.count;
 }
