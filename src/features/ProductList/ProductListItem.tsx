@@ -8,15 +8,15 @@ type ProductListItemProps = {
 };
 
 export function ProductListItem({
-	product: { id, title, category, price, image },
+	product: { id, title, category, price, images },
 }: ProductListItemProps) {
 	return (
 		<li className="inline-block w-fit sm:w-72">
 			<Link href={`/product/${id}`}>
 				<article>
 					<div className="overflow-hidden rounded border border-neutral-300/50">
-						{image ? (
-							<ProductImage src={image.src} alt={image.alt} height={500} width={500} />
+						{images ? (
+							<ProductImage src={images[0].src} alt={images[0].alt} height={500} width={500} />
 						) : (
 							<div></div>
 						)}

@@ -2,12 +2,12 @@ export type Product = {
 	id: string;
 	title: string;
 	price: number;
-	description: string;
+	description?: string;
 	category: string;
-	image?: {
+	images?: {
 		src: string;
 		alt: string;
-	};
+	}[];
 };
 
 export interface Rating {
