@@ -1,8 +1,8 @@
 fragment ProductBase on Product {
-    id
-    name
-    price
-    categories(first: 1) {
-        name
-    }
+	id
+	name
+	price
+	categories(first: 1) {
+		name
+	}
 }

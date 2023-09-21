@@ -1,6 +1,6 @@
 fragment ProductListItem on Product {
-    ...ProductBase
-    images(first: 1) {
-        url
-    }
+	...ProductBase
+	images(first: 1) {
+		url
+	}
 }
