@@ -1,6 +1,9 @@
 query ProductGetById($id: ID!) {
     product(where: {id: $id}) {
+        ...ProductBase
         description
-        ...ProductListItem
+        images {
+            url
+        }
     }
 }
