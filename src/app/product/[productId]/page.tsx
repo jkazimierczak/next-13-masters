@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { type Metadata, type Route } from "next";
+import { type Metadata } from "next";
 import Link from "next/link";
 import { ProductImage } from "@/features/ProductList/ProductImage";
 import { ProductList } from "@/features/ProductList/ProductList";
