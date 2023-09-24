@@ -82,7 +82,7 @@ export async function getSimilarProducts(categoryName: string, excludedProductId
 	return mapGqlProductsToProducts(gqlRes.products);
 }
 
-export async function getProductById(productId: string): Promise<Product | null> {
+export async function getProductById(productId: string) {
 	const gqlRes = await executeGraphql(ProductGetByIdDocument, { id: productId });
 	const p = gqlRes.product;
 
@@ -100,6 +100,9 @@ export async function getProductById(productId: string): Promise<Product | null>
 			src: img.url,
 			alt: p.name,
 		})),
+		regularEdition: p.regularEdition,
+		deluxeEdition: p.deluxeEdition,
+		formats: p.formats,
 	};
 }
 

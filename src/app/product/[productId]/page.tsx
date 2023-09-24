@@ -1,9 +1,13 @@
 import { notFound } from "next/navigation";
-import { type Metadata } from "next";
+import { type Metadata, type Route } from "next";
+import Link from "next/link";
 import { ProductImage } from "@/features/ProductList/ProductImage";
 import { ProductList } from "@/features/ProductList/ProductList";
 import { getProductById, getSimilarProducts } from "@/api/products";
 import { formatPrice } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { RadioGroup, RadioGroupItemCard } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
 
 type ProductPageProps = {
 	params: {
@@ -29,6 +33,17 @@ export default async function ProductPage({ params: { productId } }: ProductPage
 	}
 
 	const similarProducts = await getSimilarProducts(product.category, productId);
+	const hasAlternativeEdition = product.regularEdition || product.deluxeEdition;
+
+	const isRegularEdition = product.regularEdition === null;
+	const isDeluxeEdition = product.deluxeEdition === null;
+	// console.log("isDeluxe", !!product.regularEdition, "isRegular", !!product.deluxeEdition);
+	const deluxeEditionHref = isDeluxeEdition
+		? "#"
+		: (`/product/${product.deluxeEdition?.id}` as const);
+	const regularEditionHref = isRegularEdition
+		? "#"
+		: (`/product/${product.regularEdition?.id}` as const);
 
 	return (
 		<>
@@ -48,10 +63,54 @@ export default async function ProductPage({ params: { productId } }: ProductPage
 				<div>
 					<h1 className="mb-2 text-2xl font-bold sm:text-3xl lg:text-4xl">{product.title}</h1>
 					<p className="mb-6">{formatPrice(product.price)}</p>
-					<button className="mb-6 w-full rounded bg-black py-2 text-center font-semibold text-white">
-						Add to cart
-					</button>
-					<p className="md:text-justify">{product.description}</p>
+					<Button className="mb-6 w-full">Add to cart</Button>
+
+					{product.formats.length >= 2 && (
+						<div className="mb-5">
+							<h2 className="mb-2 text-lg font-medium">Format</h2>
+							<RadioGroup defaultValue="Vinyl Record">
+								<div className="flex w-fit items-center gap-2">
+									{product.formats.map((format) => (
+										<RadioGroupItemCard
+											key={format.id}
+											value={format.name}
+											id={format.id}
+											className="flex w-32 min-w-fit items-center justify-center space-x-2 px-4 py-2"
+										>
+											<Label htmlFor="vinyl">{format.name}</Label>
+										</RadioGroupItemCard>
+									))}
+								</div>
+							</RadioGroup>
+						</div>
+					)}
+
+					{hasAlternativeEdition && (
+						<div>
+							<h2 className="mb-2 text-lg font-medium">Edition</h2>
+							<div className="flex gap-2">
+								<Button
+									asChild
+									size="sm"
+									variant={!isDeluxeEdition ? "outline" : "default"}
+									className="w-32 min-w-fit border-2"
+								>
+									<Link href={deluxeEditionHref}>Deluxe</Link>
+								</Button>
+								<Button
+									asChild
+									size="sm"
+									variant={!isRegularEdition ? "outline" : "default"}
+									className="w-32 min-w-fit border-2"
+								>
+									<Link href={regularEditionHref}>Regular</Link>
+								</Button>
+							</div>
+						</div>
+					)}
+
+					{/* TODO: Uncomment */}
+					{/*<p className="md:text-justify">{product.description}</p>*/}
 				</div>
 			</div>
 
