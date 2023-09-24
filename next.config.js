@@ -1,3 +1,5 @@
+const isProduction = process.env.NODE_ENV === "production";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	images: {
@@ -9,9 +11,11 @@ const nextConfig = {
 		mdxRs: true,
 	},
 	compiler: {
-		removeConsole: {
-			exclude: ["error"],
-		},
+		removeConsole: isProduction
+			? {
+					exclude: ["error"],
+			  }
+			: false,
 	},
 	rewrites: () => {
 		return [
