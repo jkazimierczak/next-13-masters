@@ -8,11 +8,13 @@ import { formatPrice } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItemCard } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+import { queryParamsSchema } from "@/app/product/[productId]/queryParamsSchema";
 
 type ProductPageProps = {
 	params: {
 		productId: string;
 	};
+	searchParams: { [key: string]: string | string[] | undefined };
 };
 
 export const generateMetadata = async ({
@@ -25,12 +27,18 @@ export const generateMetadata = async ({
 	};
 };
 
-export default async function ProductPage({ params: { productId } }: ProductPageProps) {
+export default async function ProductPage({
+	params: { productId },
+	searchParams,
+}: ProductPageProps) {
 	const product = await getProductById(productId);
 
 	if (!product) {
 		notFound();
 	}
+
+	const sanitizedSearchParams = queryParamsSchema.parse(searchParams);
+	const defaultFormatValue = sanitizedSearchParams.format;
 
 	const similarProducts = await getSimilarProducts(product.category, productId);
 	const hasAlternativeEdition = product.regularEdition || product.deluxeEdition;
@@ -68,17 +76,22 @@ export default async function ProductPage({ params: { productId } }: ProductPage
 					{product.formats.length >= 2 && (
 						<div className="mb-5">
 							<h2 className="mb-2 text-lg font-medium">Format</h2>
-							<RadioGroup defaultValue="Vinyl Record">
+							<RadioGroup defaultValue={defaultFormatValue}>
 								<div className="flex w-fit items-center gap-2">
 									{product.formats.map((format) => (
-										<RadioGroupItemCard
+										<Link
 											key={format.id}
-											value={format.name}
-											id={format.id}
-											className="flex w-32 min-w-fit items-center justify-center space-x-2 px-4 py-2"
+											href={`?format=${encodeURIComponent(format.name)}`}
+											scroll={false}
 										>
-											<Label htmlFor="vinyl">{format.name}</Label>
-										</RadioGroupItemCard>
+											<RadioGroupItemCard
+												value={encodeURIComponent(format.name)}
+												id={format.id}
+												className="flex w-32 min-w-fit items-center justify-center space-x-2 px-4 py-2"
+											>
+												<Label htmlFor="vinyl">{format.name}</Label>
+											</RadioGroupItemCard>
+										</Link>
 									))}
 								</div>
 							</RadioGroup>
@@ -109,8 +122,7 @@ export default async function ProductPage({ params: { productId } }: ProductPage
 						</div>
 					)}
 
-					{/* TODO: Uncomment */}
-					{/*<p className="md:text-justify">{product.description}</p>*/}
+					<p className="mt-6 md:text-justify">{product.description}</p>
 				</div>
 			</div>
 
