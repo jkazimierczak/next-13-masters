@@ -3,7 +3,7 @@ import { type Metadata } from "next";
 import { ProductImage } from "@/features/ProductList/ProductImage";
 import { ProductList } from "@/features/ProductList/ProductList";
 import { formatPrice } from "@/utils/formatPrice";
-import { getProductById } from "@/api/products";
+import { getProductById, getSimilarProducts } from "@/api/products";
 
 type ProductPageProps = {
 	params: {
@@ -27,6 +27,8 @@ export default async function ProductPage({ params: { productId } }: ProductPage
 	if (!product) {
 		notFound();
 	}
+
+	const similarProducts = await getSimilarProducts(product.category, productId);
 
 	return (
 		<>
@@ -53,13 +55,17 @@ export default async function ProductPage({ params: { productId } }: ProductPage
 				</div>
 			</div>
 
-			<h3 className="mb-5 text-2xl font-bold font-bold sm:text-3xl lg:text-4xl">
-				Similar Products
-			</h3>
-			{/* TODO: Fix width alignment */}
-			<div className="mx-auto w-fit">
-				<ProductList products={[product, product, product, product]} />
-			</div>
+			{similarProducts.length > 0 && (
+				<>
+					<h3 className="mb-5 text-2xl font-bold font-bold sm:text-3xl lg:text-4xl">
+						Similar Products
+					</h3>
+					{/* TODO: Fix width alignment */}
+					<div className="mx-auto w-fit">
+						<ProductList products={similarProducts} />
+					</div>
+				</>
+			)}
 		</>
 	);
 }

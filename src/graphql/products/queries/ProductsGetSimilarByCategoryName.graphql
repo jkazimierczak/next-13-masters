@@ -1,0 +1,8 @@
+query ProductsGetSimilarByCategoryName($categoryName: String!, $excludedProductId: ID!) {
+	products(
+		where: { AND: [{ categories_some: { name: $categoryName } }, { id_not: $excludedProductId }] }
+		first: 4
+	) {
+		...ProductListItem
+	}
+}

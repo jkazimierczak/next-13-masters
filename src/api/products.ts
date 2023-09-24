@@ -9,6 +9,7 @@ import {
 	ProductsGetCountDocument,
 	ProductsGetDocument,
 	type ProductsGetQuery,
+	ProductsGetSimilarByCategoryNameDocument,
 } from "@/gql/graphql";
 import { itemsPerPage } from "@/constants";
 
@@ -70,6 +71,15 @@ export async function getProductsByCollectionSlug(
 	}
 
 	return mapGqlProductsToProducts(gqlRes.collections[0].products);
+}
+
+export async function getSimilarProducts(categoryName: string, excludedProductId: string) {
+	const gqlRes = await executeGraphql(ProductsGetSimilarByCategoryNameDocument, {
+		categoryName,
+		excludedProductId,
+	});
+
+	return mapGqlProductsToProducts(gqlRes.products);
 }
 
 export async function getProductById(productId: string): Promise<Product | null> {
