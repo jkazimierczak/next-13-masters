@@ -2,8 +2,8 @@ import { notFound } from "next/navigation";
 import { type Metadata } from "next";
 import { ProductImage } from "@/features/ProductList/ProductImage";
 import { ProductList } from "@/features/ProductList/ProductList";
-import { formatPrice } from "@/utils/formatPrice";
 import { getProductById, getSimilarProducts } from "@/api/products";
+import { formatPrice } from "@/lib/utils";
 
 type ProductPageProps = {
 	params: {
