@@ -1,23 +1,11 @@
 import Link from "next/link";
 import { type Product } from "./types";
 import { ProductImage } from "./ProductImage";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, prepareImageProps } from "@/lib/utils";
 
 type ProductListItemProps = {
 	product: Product;
 };
-
-function prepareImageProps(images: ProductListItemProps["product"]["images"]) {
-	return images && images[0]
-		? {
-				src: images[0].src,
-				alt: images[0].alt,
-		  }
-		: {
-				src: "/placeholder-img.webp",
-				alt: "Placeholder image of album cover.",
-		  };
-}
 
 export function ProductListItem({
 	product: { id, title, category, price, images },

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ProductImage } from "@/features/ProductList/ProductImage";
 import { ProductList } from "@/features/ProductList/ProductList";
 import { getProductById, getSimilarProducts } from "@/api/products";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, prepareImageProps } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItemCard } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
@@ -56,16 +56,9 @@ export default async function ProductPage({
 	return (
 		<>
 			<div className="mb-10 grid-cols-2 gap-8 md:grid">
-				<div className="mb-3 h-fit w-full overflow-hidden border">
+				<div className="mb-3 h-fit w-full overflow-hidden">
 					<div className="mx-auto w-fit">
-						{product.images && product.images[0] && (
-							<ProductImage
-								src={product.images[0].src}
-								alt={product.images[0].alt}
-								width={500}
-								height={500}
-							/>
-						)}
+						<ProductImage {...prepareImageProps(product.images)} width={500} height={500} />
 					</div>
 				</div>
 				<div>
