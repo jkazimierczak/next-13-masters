@@ -5,10 +5,12 @@
   "private": true,
   "scripts": {
     "dev": "concurrently \"next dev\" \"graphql-codegen --config .graphqlrc.js --watch\"",
+    "dev:solo": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint --fix --dir src",
-    "test": "playwright test 2.spec.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "playwright test 3.spec.ts",
     "test:features": "vitest src/features",
     "codegen": "graphql-codegen --config .graphqlrc.js",
     "codegen:watch": "graphql-codegen --config .graphqlrc.js --watch"
