@@ -1,4 +1,4 @@
-query ProductsGetByCollectionSlug($slug: String!, $count: Int!, $offset: Int!) {
+query ProductsGetByCollectionSlug($slug: String!, $count: Int, $offset: Int) {
 	collections(where: { slug: $slug }) {
 		products(first: $count, skip: $offset) {
 			...ProductListItem

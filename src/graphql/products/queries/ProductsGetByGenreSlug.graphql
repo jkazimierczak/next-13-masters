@@ -1,4 +1,4 @@
-query ProductsGetByGenreSlug($slug: String!, $count: Int!, $offset: Int!) {
+query ProductsGetByGenreSlug($slug: String!, $count: Int, $offset: Int) {
 	genres(where: { slug: $slug }) {
 		products(first: $count, skip: $offset) {
 			...ProductListItem
