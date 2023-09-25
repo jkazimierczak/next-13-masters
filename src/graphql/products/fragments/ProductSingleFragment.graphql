@@ -6,7 +6,7 @@ fragment ProductSingle on Product {
 	images {
 		url
 	}
-	categories(first: 1) {
+	genres(first: 1) {
 		name
 	}
 	regularEdition {

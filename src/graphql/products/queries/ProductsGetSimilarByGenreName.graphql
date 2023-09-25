@@ -1,0 +1,8 @@
+query ProductsGetSimilarByGenreName(genreName: String!, $excludedProductId: ID!) {
+	products(
+		where: { AND: [{ genres_some: { name: genreName } }, { id_not: $excludedProductId }] }
+		first: 4
+	) {
+		...ProductListItem
+	}
+}

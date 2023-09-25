@@ -1,4 +1,4 @@
-query ProductsGet($count: Int!, $offset: Int!) {
+query ProductsGet($count: Int, $offset: Int) {
 	products(first: $count, skip: $offset) {
 		...ProductListItem
 	}
