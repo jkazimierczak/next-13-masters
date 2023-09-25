@@ -42,6 +42,15 @@ export async function getProducts(page: number): Promise<Product[]> {
 	return mapGqlProductsToProducts(gqlRes.products);
 }
 
+export async function getProductsBySearch(query: string, page: number): Promise<Product[]> {
+	const gqlRes = await executeGraphql(ProductsGetBySearchDocument, {
+		query: query,
+		...preparePaginationArgs(page),
+	});
+
+	return mapGqlProductsToProducts(gqlRes.products);
+}
+
 export async function getProductsByCategorySlug(
 	slug: string,
 	page: number,
