@@ -2,14 +2,15 @@ import { type Product } from "@/features/ProductList/types";
 import { executeGraphql } from "@/api/graphql";
 import {
 	ProductGetByIdDocument,
-	ProductsGetByCategorySlugDocument,
 	ProductsGetByCollectionSlugDocument,
-	ProductsGetCountByCategorySlugDocument,
+	ProductsGetByGenreSlugDocument,
+	ProductsGetBySearchDocument,
 	ProductsGetCountByCollectionSlugDocument,
+	ProductsGetCountByGenreSlugDocument,
 	ProductsGetCountDocument,
 	ProductsGetDocument,
 	type ProductsGetQuery,
-	ProductsGetSimilarByCategoryNameDocument,
+	ProductsGetSimilarByGenreNameDocument,
 } from "@/gql/graphql";
 import { itemsPerPage } from "@/constants";
 
@@ -26,7 +27,7 @@ function mapGqlProductsToProducts(products: ProductsGetQuery["products"]) {
 			id: p.id,
 			title: p.name,
 			price: p.price,
-			category: p.categories[0]?.name || "",
+			genre: p.genres[0]?.name || "",
 			images: p.images.map((img) => ({
 				src: img.url,
 				alt: p.name,
@@ -45,16 +46,16 @@ export async function getProductsByCategorySlug(
 	slug: string,
 	page: number,
 ): Promise<Product[] | null> {
-	const gqlRes = await executeGraphql(ProductsGetByCategorySlugDocument, {
+	const gqlRes = await executeGraphql(ProductsGetByGenreSlugDocument, {
 		slug,
 		...preparePaginationArgs(page),
 	});
 
-	if (!gqlRes.categories[0]) {
+	if (!gqlRes.genres[0]) {
 		return null;
 	}
 
-	return mapGqlProductsToProducts(gqlRes.categories[0].products);
+	return mapGqlProductsToProducts(gqlRes.genres[0].products);
 }
 
 export async function getProductsByCollectionSlug(
@@ -73,9 +74,9 @@ export async function getProductsByCollectionSlug(
 	return mapGqlProductsToProducts(gqlRes.collections[0].products);
 }
 
-export async function getSimilarProducts(categoryName: string, excludedProductId: string) {
-	const gqlRes = await executeGraphql(ProductsGetSimilarByCategoryNameDocument, {
-		categoryName,
+export async function getSimilarProducts(genreName: string, excludedProductId: string) {
+	const gqlRes = await executeGraphql(ProductsGetSimilarByGenreNameDocument, {
+		genreName,
 		excludedProductId,
 	});
 
@@ -95,7 +96,7 @@ export async function getProductById(productId: string) {
 		title: p.name,
 		price: p.price,
 		description: p.description,
-		category: p.categories[0]?.name || "",
+		genre: p.genres[0]?.name || "",
 		images: p.images.map((img) => ({
 			src: img.url,
 			alt: p.name,
@@ -113,7 +114,7 @@ export async function getProductsCount() {
 }
 
 export async function getProductsCountByCategorySlug(slug: string) {
-	const gqlRes = await executeGraphql(ProductsGetCountByCategorySlugDocument, { slug });
+	const gqlRes = await executeGraphql(ProductsGetCountByGenreSlugDocument, { slug });
 
 	return gqlRes.productsConnection.aggregate.count;
 }

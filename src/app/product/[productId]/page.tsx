@@ -40,7 +40,7 @@ export default async function ProductPage({
 	const sanitizedSearchParams = queryParamsSchema.parse(searchParams);
 	const defaultFormatValue = sanitizedSearchParams.format;
 
-	const similarProducts = await getSimilarProducts(product.category, productId);
+	const similarProducts = await getSimilarProducts(product.genre, productId);
 	const hasAlternativeEdition = product.regularEdition || product.deluxeEdition;
 
 	const isRegularEdition = product.regularEdition === null;

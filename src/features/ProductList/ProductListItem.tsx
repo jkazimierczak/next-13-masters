@@ -8,7 +8,7 @@ type ProductListItemProps = {
 };
 
 export function ProductListItem({
-	product: { id, title, category, price, images },
+	product: { id, title, genre, price, images },
 }: ProductListItemProps) {
 	return (
 		<li className="inline-block w-fit sm:w-72">
@@ -24,7 +24,7 @@ export function ProductListItem({
 						<span>{formatPrice(price)}</span>
 						{/*<span className="text-neutral-500">{rating.rate.toFixed(1)} ★</span>*/}
 					</div>
-					<p hidden={true}>{category}</p>
+					<p hidden={true}>{genre}</p>
 				</article>
 			</Link>
 		</li>
