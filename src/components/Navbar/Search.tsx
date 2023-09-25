@@ -7,7 +7,7 @@ import { useDebounce } from "@/hooks/useDebounce";
 export function Search() {
 	const router = useRouter();
 	const searchParams = useSearchParams();
-	const [inputValue, setInputValue] = useState("");
+	const [inputValue, setInputValue] = useState(searchParams.get("query") || "");
 	const debouncedValue = useDebounce(inputValue, 500);
 
 	const createQueryString = useCallback(
@@ -35,6 +35,8 @@ export function Search() {
 	}
 
 	useEffect(() => {
+		if (debouncedValue === "") return;
+
 		goToSearchPage(debouncedValue);
 	}, [debouncedValue]);
 
