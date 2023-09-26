@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { queryParamsSchema } from "@/app/product/[productId]/queryParamsSchema";
 import { addToCart, getOrCreateCart } from "@/api/cart";
 import { isProduction } from "@/constants";
+import { AddToCartButton } from "@/app/product/[productId]/AddToCartButton";
 
 type ProductPageProps = {
 	params: {
@@ -81,7 +82,7 @@ export default async function ProductPage({
 					<h1 className="mb-2 text-2xl font-bold sm:text-3xl lg:text-4xl">{product.title}</h1>
 					<p className="mb-6">{formatPrice(product.price)}</p>
 					<form action={addProductToCartAction}>
-						<Button className="mb-6 w-full">Add to cart</Button>
+						<AddToCartButton />
 					</form>
 
 					{product.formats.length >= 2 && (
