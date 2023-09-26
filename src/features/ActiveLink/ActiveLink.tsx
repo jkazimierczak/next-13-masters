@@ -3,6 +3,7 @@
 import { type Route } from "next";
 import Link from "next/link";
 import { clsx } from "clsx";
+import React from "react";
 import { useActiveLink } from "@/features/ActiveLink/useActiveLink";
 
 type ActiveLinkProps<T extends string> = {
@@ -17,6 +18,7 @@ export function ActiveLink<T extends string>({ children, href, exact }: ActiveLi
 	return (
 		<Link
 			href={href}
+			aria-current={isActive ? true : undefined}
 			className={clsx({
 				"border-b border-primary text-primary": isActive,
 			})}

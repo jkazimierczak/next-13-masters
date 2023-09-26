@@ -7,7 +7,8 @@ import { ActiveLink } from "@/features/ActiveLink/ActiveLink";
 const links: { href: Route; name: string; exact: boolean }[] = [
 	{ href: "/", name: "Home", exact: true },
 	{ href: "/products", name: "All", exact: false },
-	{ href: "/categories/t-shirts" as Route, name: "T-Shirts", exact: false },
+	{ href: "/categories/pop-and-rock" as Route, name: "Pop & Rock", exact: false },
+	{ href: "/categories/reggae-and-dub" as Route, name: "Reggae & Dub", exact: false },
 ];
 
 export function Navbar() {

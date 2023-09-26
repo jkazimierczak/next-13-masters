@@ -24,6 +24,7 @@ export const generateMetadata = async ({
 
 	return {
 		title: product?.title ?? "Product not found",
+		description: product?.title,
 	};
 };
 
