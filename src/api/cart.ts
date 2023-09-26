@@ -7,6 +7,7 @@ import {
 	CartGetByIdDocument,
 	ProductGetByIdDocument,
 } from "@/gql/graphql";
+import { isProduction } from "@/constants";
 
 export async function getCartById(cartId: string) {
 	return executeGraphql(CartGetByIdDocument, { id: cartId });
@@ -37,6 +38,11 @@ export async function getOrCreateCart(): Promise<CartFragment> {
 	if (!cart.createOrder) {
 		throw new Error("Failed to create cart");
 	}
+	cookies().set("cartId", cart.createOrder.id, {
+		httpOnly: true,
+		sameSite: "lax",
+		secure: isProduction,
+	});
 	return cart.createOrder;
 }
 

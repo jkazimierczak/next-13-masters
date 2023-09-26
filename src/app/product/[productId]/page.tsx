@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
 import { type Metadata } from "next";
 import Link from "next/link";
-import { cookies } from "next/headers";
 import { ProductImage } from "@/features/ProductList/ProductImage";
 import { ProductList } from "@/features/ProductList/ProductList";
 import { getProductById, getSimilarProducts } from "@/api/products";
@@ -11,7 +10,6 @@ import { RadioGroup, RadioGroupItemCard } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { queryParamsSchema } from "@/app/product/[productId]/queryParamsSchema";
 import { addToCart, getOrCreateCart } from "@/api/cart";
-import { isProduction } from "@/constants";
 import { AddToCartButton } from "@/app/product/[productId]/AddToCartButton";
 
 type ProductPageProps = {
@@ -62,11 +60,6 @@ export default async function ProductPage({
 		"use server";
 
 		const cart = await getOrCreateCart();
-		cookies().set("cartId", cart.id, {
-			httpOnly: true,
-			sameSite: "lax",
-			secure: isProduction,
-		});
 		await addToCart(cart.id, productId);
 	}
 
