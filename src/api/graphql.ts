@@ -9,8 +9,7 @@ export async function executeGraphql<TResult, TVariables>(
 		throw TypeError("GRAPHQL_URL is not defined");
 	}
 
-	const isMutation = query.includes("mutation ");
-	if (isMutation && !process.env.HYGRAPH_MUTATION_TOKEN) {
+	if (!process.env.HYGRAPH_TOKEN) {
 		throw TypeError("HYGRAPH_MUTATION_TOKEN is not defined");
 	}
 
@@ -22,7 +21,7 @@ export async function executeGraphql<TResult, TVariables>(
 		}),
 		headers: {
 			"Content-Type": "application/json",
-			...(isMutation ? { Authorization: `Bearer ${process.env.HYGRAPH_MUTATION_TOKEN}` } : {}),
+			Authorization: `Bearer ${process.env.HYGRAPH_TOKEN}`,
 		},
 	});
 

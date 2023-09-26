@@ -16,13 +16,20 @@ export async function createCart() {
 	return executeGraphql(CartCreateDocument, {});
 }
 
-export async function getOrCreateCart(): Promise<CartFragment> {
+export async function getCartFromCookies() {
 	const cartId = cookies().get("cartId")?.value;
 	if (cartId) {
 		const cart = await getCartById(cartId);
 		if (cart.order) {
 			return cart.order;
 		}
+	}
+}
+
+export async function getOrCreateCart(): Promise<CartFragment> {
+	const existingCart = await getCartFromCookies();
+	if (existingCart) {
+		return existingCart;
 	}
 
 	// TODO: Implement upsert
