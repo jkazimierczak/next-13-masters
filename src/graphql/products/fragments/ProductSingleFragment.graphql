@@ -1,0 +1,26 @@
+fragment ProductSingle on Product {
+	id
+	name
+	price
+	description
+	images {
+		url
+	}
+	genres(first: 1) {
+		name
+	}
+	regularEdition {
+		id
+		name
+	}
+	deluxeEdition {
+		... on Product {
+			id
+			name
+		}
+	}
+	formats {
+		id
+		name
+	}
+}

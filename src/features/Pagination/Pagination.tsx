@@ -2,6 +2,7 @@ import Link from "next/link";
 import { clsx } from "clsx";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { type Route } from "next";
+import { getPagesCount } from "@/features/Pagination/getPageCount";
 
 export type PaginationProps<T extends string> = {
 	currentPage: number;
@@ -16,7 +17,7 @@ export function Pagination<T extends string>({
 	totalItems,
 	link,
 }: PaginationProps<T>) {
-	const pages = Math.ceil(totalItems / itemsPerPage);
+	const pages = getPagesCount(totalItems, itemsPerPage);
 
 	const isPrevPageLinkDisabled = currentPage === 1;
 	const prevPageNum = isPrevPageLinkDisabled ? currentPage : currentPage - 1;

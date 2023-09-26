@@ -1,7 +1,9 @@
+const isProduction = process.env.NODE_ENV === "production";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	images: {
-		domains: ["naszsklep-api.vercel.app"],
+		domains: ["media.graphassets.com"],
 	},
 	pageExtensions: ["ts", "tsx", "mdx"],
 	experimental: {
@@ -9,15 +11,25 @@ const nextConfig = {
 		mdxRs: true,
 	},
 	compiler: {
-		removeConsole: {
-			exclude: ["error"],
-		},
+		removeConsole: isProduction
+			? {
+					exclude: ["error"],
+			  }
+			: false,
 	},
 	rewrites: () => {
 		return [
 			{
 				source: "/products",
 				destination: "/products/1",
+			},
+			{
+				source: "/categories/:slug",
+				destination: "/categories/:slug/1",
+			},
+			{
+				source: "/collections/:slug",
+				destination: "/collections/:slug/1",
 			},
 		];
 	},
