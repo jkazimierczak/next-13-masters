@@ -9,6 +9,7 @@ const nextConfig = {
 	experimental: {
 		typedRoutes: true,
 		mdxRs: true,
+		serverActions: true,
 	},
 	compiler: {
 		removeConsole: isProduction

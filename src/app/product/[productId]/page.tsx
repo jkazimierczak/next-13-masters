@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { type Metadata } from "next";
 import Link from "next/link";
+import { cookies } from "next/headers";
 import { ProductImage } from "@/features/ProductList/ProductImage";
 import { ProductList } from "@/features/ProductList/ProductList";
 import { getProductById, getSimilarProducts } from "@/api/products";
@@ -9,6 +10,8 @@ import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItemCard } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { queryParamsSchema } from "@/app/product/[productId]/queryParamsSchema";
+import { addToCart, getOrCreateCart } from "@/api/cart";
+import { isProduction } from "@/constants";
 
 type ProductPageProps = {
 	params: {
@@ -54,6 +57,18 @@ export default async function ProductPage({
 		? "#"
 		: (`/product/${product.regularEdition?.id}` as const);
 
+	async function addProductToCartAction(_formData: FormData) {
+		"use server";
+
+		const cart = await getOrCreateCart();
+		cookies().set("cartId", cart.id, {
+			httpOnly: true,
+			sameSite: "lax",
+			secure: isProduction,
+		});
+		await addToCart(cart.id, productId);
+	}
+
 	return (
 		<>
 			<div className="mb-10 grid-cols-2 gap-8 md:grid">
@@ -65,7 +80,9 @@ export default async function ProductPage({
 				<div>
 					<h1 className="mb-2 text-2xl font-bold sm:text-3xl lg:text-4xl">{product.title}</h1>
 					<p className="mb-6">{formatPrice(product.price)}</p>
-					<Button className="mb-6 w-full">Add to cart</Button>
+					<form action={addProductToCartAction}>
+						<Button className="mb-6 w-full">Add to cart</Button>
+					</form>
 
 					{product.formats.length >= 2 && (
 						<div className="mb-5">
