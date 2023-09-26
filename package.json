@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "concurrently \"next dev\" \"graphql-codegen --config .graphqlrc.js --watch\"",
     "dev:solo": "next dev",
+    "prebuild": "graphql-codegen --config .graphqlrc.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint --fix --dir src",
