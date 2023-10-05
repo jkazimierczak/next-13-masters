@@ -10,7 +10,7 @@ export async function executeGraphql<TResult, TVariables>(
 	}
 
 	if (!process.env.HYGRAPH_TOKEN) {
-		throw TypeError("HYGRAPH_MUTATION_TOKEN is not defined");
+		throw TypeError("HYGRAPH_TOKEN is not defined");
 	}
 
 	const res = await fetch(process.env.GRAPHQL_URL, {
