@@ -1,30 +1,13 @@
 "use client";
 
-import { useTransition } from "react";
-import { useRouter } from "next/navigation";
+import { experimental_useFormStatus as useFormStatus } from "react-dom";
 import { Button } from "@/components/ui/button";
-import { removeItem } from "@/app/cart/actions";
 
-type RemoveItemButtonProps = {
-	productId: string;
-};
-
-export function RemoveItemButton({ productId }: RemoveItemButtonProps) {
-	const router = useRouter();
-	const [isPending, startTransition] = useTransition();
+export function RemoveItemButton() {
+	const formState = useFormStatus();
 
 	return (
-		<Button
-			disabled={isPending}
-			onClick={() => {
-				startTransition(async () => {
-					await removeItem(productId);
-					router.refresh();
-				});
-			}}
-			variant="destructive"
-			size="default"
-		>
+		<Button disabled={formState.pending} variant="destructive" size="default">
 			Remove
 		</Button>
 	);

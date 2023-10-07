@@ -1,14 +1,22 @@
 "use server";
 
+import { revalidateTag } from "next/cache";
 import { executeGraphQL } from "@/api/graphql";
 import { CartRemoveProductDocument } from "@/gql/graphql";
+import { removeItemFromCartFormDataSchema } from "@/app/cart/actionsSchema";
 
-export async function removeItem(itemId: string) {
-	return executeGraphQL({
+export async function removeItemFromCart(formData: FormData) {
+	const parsed = removeItemFromCartFormDataSchema.parse({
+		itemId: formData.get("itemId"),
+	});
+
+	await executeGraphQL({
 		query: CartRemoveProductDocument,
 		variables: {
-			itemId: itemId,
+			itemId: parsed.itemId,
 			quantity: 0,
 		},
 	});
+
+	revalidateTag("cart");
 }
