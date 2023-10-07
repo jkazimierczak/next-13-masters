@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { executeGraphql } from "@/api/graphql";
+import { executeGraphQL } from "@/api/graphql";
 import {
 	CartAddProductDocument,
 	CartCreateDocument,
@@ -10,11 +10,24 @@ import {
 import { isProduction } from "@/constants";
 
 export async function getCartById(cartId: string) {
-	return executeGraphql(CartGetByIdDocument, { id: cartId });
+	return executeGraphQL({
+		query: CartGetByIdDocument,
+		variables: {
+			id: cartId,
+		},
+		next: {
+			tags: ["cart"],
+		},
+	});
 }
 
 export async function createCart() {
-	return executeGraphql(CartCreateDocument, {});
+	return executeGraphQL({
+		query: CartCreateDocument,
+		next: {
+			tags: ["cart"],
+		},
+	});
 }
 
 export async function getCartFromCookies() {
@@ -47,16 +60,28 @@ export async function getOrCreateCart(): Promise<CartFragment> {
 }
 
 export async function addToCart(cartId: string, productId: string) {
-	const { product } = await executeGraphql(ProductGetByIdDocument, { id: productId });
+	const { product } = await executeGraphQL({
+		query: ProductGetByIdDocument,
+		variables: { id: productId },
+		next: {
+			tags: ["cart"],
+		},
+	});
 	if (!product) {
 		throw new Error("Product not found");
 	}
 	// TODO: Ignored caveats:
 	//	- particular product could be in cart
 	//	- quantity doesn't have to === 1
-	await executeGraphql(CartAddProductDocument, {
-		productId,
-		orderId: cartId,
-		total: product.price,
+	await executeGraphQL({
+		query: CartAddProductDocument,
+		variables: {
+			productId,
+			orderId: cartId,
+			total: product.price,
+		},
+		next: {
+			tags: ["cart"],
+		},
 	});
 }
