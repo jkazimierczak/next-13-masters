@@ -1,5 +1,5 @@
 import { z } from "zod";
 
-export const removeItemFromCartFormDataSchema = z.object({
+export const itemIdFormDataSchema = z.object({
 	itemId: z.string(),
 });

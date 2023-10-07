@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { removeItemFromCart } from "./actions";
+import { removeProductFromCartAction } from "./actions";
 import { getCartFromCookies } from "@/api/cart";
 import { formatPrice } from "@/lib/utils";
 import { RemoveItemButton } from "@/app/cart/RemoveItemButton";
@@ -34,8 +34,8 @@ export default async function CartPage() {
 								<td>{item.quantity}</td>
 								<td>{formatPrice(item.product.price)}</td>
 								<td>
-									<form action={removeItemFromCart}>
-										<input type="text" name="itemId" value={item.id} hidden />
+									<form action={removeProductFromCartAction}>
+										<input type="text" name="itemId" value={item.id} hidden readOnly />
 										<RemoveItemButton />
 									</form>
 								</td>

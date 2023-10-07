@@ -5,6 +5,7 @@ import {
 	CartCreateDocument,
 	type CartFragment,
 	CartGetByIdDocument,
+	CartRemoveProductDocument,
 	ProductGetByIdDocument,
 } from "@/gql/graphql";
 import { isProduction } from "@/constants";
@@ -82,6 +83,16 @@ export async function addToCart(cartId: string, productId: string) {
 		},
 		next: {
 			tags: ["cart"],
+		},
+	});
+}
+
+export async function removeProductFromCart(orderItemId: string) {
+	await executeGraphQL({
+		query: CartRemoveProductDocument,
+		variables: {
+			itemId: orderItemId,
+			quantity: 0,
 		},
 	});
 }
