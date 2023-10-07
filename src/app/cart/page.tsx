@@ -1,8 +1,10 @@
 import { redirect } from "next/navigation";
-import { removeProductFromCartAction } from "./actions";
+import { removeProductFromCartAction, setProductQuantityAction } from "./actions";
 import { getCartFromCookies } from "@/api/cart";
 import { formatPrice } from "@/lib/utils";
 import { RemoveItemButton } from "@/app/cart/RemoveItemButton";
+import { IncrementProductQuantityButton } from "@/app/cart/IncrementProductQuantityButton";
+import { DecrementProductQuantityButton } from "@/app/cart/DecrementProductQuantityButton";
 
 export default async function CartPage() {
 	const cart = await getCartFromCookies();
@@ -31,7 +33,33 @@ export default async function CartPage() {
 						return (
 							<tr key={`${item.product.id}-${id}`}>
 								<td>{item.product.name}</td>
-								<td>{item.quantity}</td>
+								<td>
+									<div className="flex items-center gap-2">
+										<form action={setProductQuantityAction}>
+											<input type="text" name="itemId" value={item.id} hidden readOnly />
+											<input
+												type="text"
+												name="itemQuantity"
+												value={item.quantity - 1}
+												hidden
+												readOnly
+											/>
+											<DecrementProductQuantityButton />
+										</form>
+										{item.quantity}
+										<form action={setProductQuantityAction}>
+											<input type="text" name="itemId" value={item.id} hidden readOnly />
+											<input
+												type="text"
+												name="itemQuantity"
+												value={item.quantity + 1}
+												hidden
+												readOnly
+											/>
+											<IncrementProductQuantityButton />
+										</form>
+									</div>
+								</td>
 								<td>{formatPrice(item.product.price)}</td>
 								<td>
 									<form action={removeProductFromCartAction}>

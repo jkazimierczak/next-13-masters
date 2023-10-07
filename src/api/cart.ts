@@ -6,6 +6,7 @@ import {
 	type CartFragment,
 	CartGetByIdDocument,
 	CartRemoveProductDocument,
+	CartSetProductQuantityDocument,
 	ProductGetByIdDocument,
 } from "@/gql/graphql";
 import { isProduction } from "@/constants";
@@ -85,6 +86,20 @@ export async function addToCart(cartId: string, productId: string) {
 			tags: ["cart"],
 		},
 	});
+}
+
+export async function setProductQuantityInCart(orderItemId: string, quantity: number) {
+	if (quantity === 0) {
+		await removeProductFromCart(orderItemId);
+	} else {
+		await executeGraphQL({
+			query: CartSetProductQuantityDocument,
+			variables: {
+				itemId: orderItemId,
+				quantity,
+			},
+		});
+	}
 }
 
 export async function removeProductFromCart(orderItemId: string) {
