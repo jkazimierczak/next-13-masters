@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { getCartFromCookies } from "@/api/cart";
 import { formatPrice } from "@/lib/utils";
+import { RemoveItemButton } from "@/app/cart/RemoveItemButton";
 
 export default async function CartPage() {
 	const cart = await getCartFromCookies();
@@ -13,8 +14,6 @@ export default async function CartPage() {
 		<div>
 			<h1>Order #{cart.id} summary</h1>
 
-			<pre>{JSON.stringify(cart, null, 2)}</pre>
-
 			<table>
 				<thead>
 					<tr>
@@ -24,15 +23,18 @@ export default async function CartPage() {
 					</tr>
 				</thead>
 				<tbody>
-					{cart.orderItems.map((item) => {
+					{cart.orderItems.map((item, id) => {
 						if (!item.product) {
 							return null;
 						}
 						return (
-							<tr key={item.product.id}>
+							<tr key={`${item.product.id}-${id}`}>
 								<td>{item.product.name}</td>
 								<td>{item.quantity}</td>
-								<td>{formatPrice(item.product.price / 100)}</td>
+								<td>{formatPrice(item.product.price)}</td>
+								<td>
+									<RemoveItemButton productId={item.id} />
+								</td>
 							</tr>
 						);
 					})}
