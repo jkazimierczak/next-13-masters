@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { type Metadata } from "next";
 import Link from "next/link";
+import { revalidateTag } from "next/cache";
 import { ProductImage } from "@/features/ProductList/ProductImage";
 import { ProductList } from "@/features/ProductList/ProductList";
 import { getProductById, getSimilarProducts } from "@/api/products";
@@ -61,6 +62,8 @@ export default async function ProductPage({
 
 		const cart = await getOrCreateCart();
 		await addToCart(cart.id, productId);
+
+		revalidateTag("/");
 	}
 
 	return (
