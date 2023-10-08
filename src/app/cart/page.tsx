@@ -1,10 +1,15 @@
 import { redirect } from "next/navigation";
-import { removeProductFromCartAction, setProductQuantityAction } from "./actions";
+import {
+	handlePaymentAction,
+	removeProductFromCartAction,
+	setProductQuantityAction,
+} from "./actions";
 import { getCartFromCookies } from "@/api/cart";
 import { formatPrice } from "@/lib/utils";
 import { RemoveItemButton } from "@/app/cart/RemoveItemButton";
 import { IncrementProductQuantityButton } from "@/app/cart/IncrementProductQuantityButton";
 import { DecrementProductQuantityButton } from "@/app/cart/DecrementProductQuantityButton";
+import { Button } from "@/components/ui/button";
 
 export default async function CartPage() {
 	const cart = await getCartFromCookies();
@@ -72,6 +77,10 @@ export default async function CartPage() {
 					})}
 				</tbody>
 			</table>
+
+			<form action={handlePaymentAction}>
+				<Button>Proceed to pay</Button>
+			</form>
 
 			<hr />
 
