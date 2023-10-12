@@ -15,8 +15,7 @@ const links: { href: Route; name: string; exact: boolean }[] = [
 
 export async function Navbar() {
 	const cart = await getCart();
-	// TODO: Count total quantity
-	const quantity = cart.orderItems.length ?? 0;
+	const quantity = cart.orderItems.reduce((acc, item) => acc + item.quantity, 0);
 
 	return (
 		<nav className="sticky flex w-full items-center justify-between bg-background px-5 py-4 text-white shadow md:px-12 lg:px-24">
