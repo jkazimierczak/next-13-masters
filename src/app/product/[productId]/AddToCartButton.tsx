@@ -7,7 +7,7 @@ export function AddToCartButton() {
 	const formState = useFormStatus();
 
 	return (
-		<Button className="mb-6 w-full" disabled={formState.pending}>
+		<Button className="mb-6 w-full" disabled={formState.pending} data-testid="add-to-cart-button">
 			Add to cart
 		</Button>
 	);

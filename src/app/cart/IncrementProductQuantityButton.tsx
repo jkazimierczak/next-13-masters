@@ -7,7 +7,7 @@ export function IncrementProductQuantityButton() {
 	const formState = useFormStatus();
 
 	return (
-		<Button disabled={formState.pending} size="icon">
+		<Button disabled={formState.pending} size="icon" data-testid="increment">
 			+
 		</Button>
 	);

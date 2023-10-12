@@ -47,7 +47,7 @@ export default async function CartPage() {
 											/>
 											<DecrementProductQuantityButton />
 										</form>
-										{item.quantity}
+										<span data-testid="quantity">{item.quantity}</span>
 										<form action={setProductQuantityAction}>
 											<input type="text" name="itemId" value={item.id} hidden readOnly />
 											<input
