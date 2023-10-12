@@ -1,16 +1,9 @@
 "use server";
 
-import Stripe from "stripe";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { itemIdFormDataSchema, itemSetQuantityFormDataSchema } from "@/app/cart/actionsSchema";
-import {
-	addToCart,
-	getCartFromCookies,
-	getOrCreateCart,
-	removeProductFromCart,
-	setProductQuantityInCart,
-} from "@/api/cart";
+import { addToCart, getCart, removeProductFromCart, setProductQuantityInCart } from "@/api/cart";
 import { withRevalidateCart } from "@/lib/utils";
 import { createStripeInstance } from "@/lib/stripe";
 
@@ -20,7 +13,7 @@ export async function addProductToCartAction(formData: FormData) {
 			itemId: formData.get("itemId"),
 		});
 
-		const cart = await getOrCreateCart();
+		const cart = await getCart();
 		await addToCart(cart.id, parsed.itemId);
 	});
 }
@@ -51,7 +44,7 @@ export async function handlePaymentAction(_formData: FormData) {
 
 	const stripe = createStripeInstance();
 
-	const cart = await getCartFromCookies();
+	const cart = await getCart();
 	if (!cart) {
 		return;
 	}
