@@ -13,8 +13,7 @@ export async function addProductToCartAction(formData: FormData) {
 			itemId: formData.get("itemId"),
 		});
 
-		const cart = await getCart();
-		await addToCart(cart.id, parsed.itemId);
+		await addToCart(parsed.itemId);
 	});
 }
 

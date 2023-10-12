@@ -63,7 +63,7 @@ export async function getCart(): Promise<CartFragment> {
 	return cart.createOrder;
 }
 
-export async function addToCart(cartId: string, productId: string) {
+export async function addToCart(productId: string) {
 	const { product } = await executeGraphQL({
 		query: ProductGetByIdDocument,
 		variables: { id: productId },
@@ -71,18 +71,31 @@ export async function addToCart(cartId: string, productId: string) {
 			tags: ["cart"],
 		},
 	});
+
 	if (!product) {
 		throw new Error("Product not found");
 	}
 	// TODO: Ignored caveats:
-	//	- particular product could be in cart
 	//	- quantity doesn't have to === 1
+
+	const cart = await getCart();
+	const orderItem = cart.orderItems.find(({ product }) => product?.id === productId);
+
+	if (!orderItem) {
+		await addNewProductToCart(productId, cart.id, product.price);
+	} else {
+		const newQuantity = orderItem.quantity + 1;
+		await setProductQuantityInCart(orderItem.id, newQuantity);
+	}
+}
+
+export async function addNewProductToCart(productId: string, orderId: string, price: number) {
 	await executeGraphQL({
 		query: CartAddProductDocument,
 		variables: {
 			productId,
-			orderId: cartId,
-			total: product.price,
+			orderId: orderId,
+			total: price,
 		},
 		next: {
 			tags: ["cart"],
@@ -94,10 +107,19 @@ export async function setProductQuantityInCart(orderItemId: string, quantity: nu
 	if (quantity === 0) {
 		await removeProductFromCart(orderItemId);
 	} else {
+		const cart = await getCart();
+
+		const item = cart.orderItems.find((item) => item.id === orderItemId);
+		if (!item) {
+			throw new Error("Item not found");
+		}
+
+		const newTotalPrice = (item.product?.price ?? 0) * quantity;
 		await executeGraphQL({
 			query: CartSetProductQuantityDocument,
 			variables: {
 				itemId: orderItemId,
+				total: newTotalPrice,
 				quantity,
 			},
 		});

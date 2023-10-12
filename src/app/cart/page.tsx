@@ -61,7 +61,7 @@ export default async function CartPage() {
 										</form>
 									</div>
 								</td>
-								<td>{formatPrice(item.product.price)}</td>
+								<td>{formatPrice(item.total)}</td>
 								<td>
 									<form action={removeProductFromCartAction}>
 										<input type="text" name="itemId" value={item.id} hidden readOnly />
