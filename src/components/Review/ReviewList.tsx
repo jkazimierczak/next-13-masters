@@ -11,7 +11,9 @@ export function ReviewList({ reviews }: ReviewListProps) {
 	return (
 		<ul>
 			{reviews.map((review) => (
-				<ReviewListItem key={review.id} review={review} />
+				<li key={review.id} className="mb-6">
+					<ReviewListItem review={review} />
+				</li>
 			))}
 		</ul>
 	);
