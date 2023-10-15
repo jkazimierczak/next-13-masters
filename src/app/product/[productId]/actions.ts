@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidateTag } from "next/cache";
 import { addReview, reviewFormDataSchema } from "@/api/review";
 
 export async function handleReviewFormAction(formData: FormData) {
@@ -13,4 +14,5 @@ export async function handleReviewFormAction(formData: FormData) {
 	});
 
 	await addReview(parsed);
+	revalidateTag("reviews");
 }

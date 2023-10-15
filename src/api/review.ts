@@ -21,6 +21,9 @@ export async function addReview(review: ReviewType) {
 		variables: {
 			...review,
 		},
+		next: {
+			tags: ["reviews"],
+		},
 	});
 }
 
@@ -29,6 +32,9 @@ export async function getReviewsByProductId(productId: string) {
 		query: ReviewsGetByProductIdDocument,
 		variables: {
 			productId,
+		},
+		next: {
+			tags: ["reviews"],
 		},
 	});
 	return res.reviews;
