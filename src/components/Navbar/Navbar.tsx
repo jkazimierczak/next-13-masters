@@ -4,7 +4,7 @@ import { type Route } from "next";
 import { ShoppingCart } from "lucide-react";
 import { Search } from "./Search";
 import { ActiveLink } from "@/features/ActiveLink/ActiveLink";
-import { getCart } from "@/api/cart";
+import { getCartFromCookies } from "@/api/cart";
 
 const links: { href: Route; name: string; exact: boolean }[] = [
 	{ href: "/", name: "Home", exact: true },
@@ -13,9 +13,13 @@ const links: { href: Route; name: string; exact: boolean }[] = [
 	{ href: "/categories/reggae-and-dub" as Route, name: "Reggae & Dub", exact: false },
 ];
 
+const defaultCartQuantity = 0;
+
 export async function Navbar() {
-	const cart = await getCart();
-	const quantity = cart.orderItems.reduce((acc, item) => acc + item.quantity, 0);
+	const cart = await getCartFromCookies();
+	const quantity = cart
+		? cart.orderItems.reduce((acc, item) => acc + item.quantity, 0)
+		: defaultCartQuantity;
 
 	return (
 		<nav className="sticky flex w-full items-center justify-between bg-background px-5 py-4 text-white shadow md:px-12 lg:px-24">

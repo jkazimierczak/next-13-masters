@@ -3,7 +3,7 @@ import {
 	removeProductFromCartAction,
 	setProductQuantityAction,
 } from "./actions";
-import { getCart } from "@/api/cart";
+import { getCartFromCookies } from "@/api/cart";
 import { formatPrice } from "@/lib/utils";
 import { RemoveItemButton } from "@/app/cart/RemoveItemButton";
 import { IncrementProductQuantityButton } from "@/app/cart/IncrementProductQuantityButton";
@@ -11,7 +11,11 @@ import { DecrementProductQuantityButton } from "@/app/cart/DecrementProductQuant
 import { Button } from "@/components/ui/button";
 
 export default async function CartPage() {
-	const cart = await getCart();
+	const cart = await getCartFromCookies();
+
+	if (!cart) {
+		return <p>Cart empty</p>;
+	}
 
 	return (
 		<div>

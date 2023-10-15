@@ -23,7 +23,7 @@ async function getCartById(cartId: string) {
 	});
 }
 
-async function getCartFromCookies() {
+export async function getCartFromCookies() {
 	const cartId = cookies().get("cartId")?.value;
 	if (cartId) {
 		const cart = await getCartById(cartId);
