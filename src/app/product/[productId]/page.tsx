@@ -11,9 +11,8 @@ import { Label } from "@/components/ui/label";
 import { queryParamsSchema } from "@/app/product/[productId]/queryParamsSchema";
 import { AddToCartButton } from "@/app/product/[productId]/AddToCartButton";
 import { addProductToCartAction } from "@/app/cart/actions";
-import { handleReviewFormAction } from "@/app/product/[productId]/actions";
-import { Input } from "@/components/ui/input";
 import { getReviewsByProductId } from "@/api/review";
+import { ReviewsSectionLayout } from "@/components/Review/ReviewsSectionLayout";
 
 export type ProductPageProps = {
 	params: {
@@ -38,8 +37,7 @@ export default async function ProductPage({
 	searchParams,
 }: ProductPageProps) {
 	const product = await getProductById(productId);
-	const productReviews = await getReviewsByProductId(productId);
-	console.log("reviews", productReviews);
+	const reviews = await getReviewsByProductId(productId);
 
 	if (!product) {
 		notFound();
@@ -142,64 +140,7 @@ export default async function ProductPage({
 				</>
 			)}
 
-			<div className="mt-10 flex gap-10">
-				<div className="w-1/3">
-					<h2 className="mb-4 text-4xl font-bold">Add review</h2>
-					<p className="mb-4">
-						{"You own the record already? That's cool! Give a word to other users about it:"}
-					</p>
-					<form action={handleReviewFormAction} data-testid="add-review-form">
-						<input type="text" name="productId" value={productId} readOnly hidden />
-						<Label htmlFor="headline" className="text-md mb-1 block">
-							Headline
-						</Label>
-						<Input className="mb-2" type="text" name="headline" id="headline" required />
-						<Label htmlFor="content" className="text-md mb-1 block">
-							Content
-						</Label>
-						<Input className="mb-2" type="text" name="content" id="content" required />
-						<Label htmlFor="rating" className="text-md mb-1 block">
-							Rating
-						</Label>
-						<Input
-							className="mb-2"
-							type="number"
-							name="rating"
-							id="rating"
-							min={0}
-							max={5}
-							required
-						/>
-						<Label htmlFor="username" className="text-md mb-1 block">
-							Username
-						</Label>
-						<Input className="mb-2" type="text" name="username" id="username" required />
-						<Label htmlFor="email" className="text-md mb-1 block">
-							Email
-						</Label>
-						<Input className="mb-2" type="email" name="email" id="email" required />
-
-						<Button className="mt-4 w-full">Add review</Button>
-					</form>
-				</div>
-				<div className="w-2/3">
-					<h2 className="mb-4 text-4xl font-bold">Reviews</h2>
-					{productReviews.length === 0 && <p>This product has no reviews</p>}
-
-					<div>
-						{productReviews.map((review) => (
-							<div key={review.id} className="mb-6">
-								<p className="flex items-center gap-4">
-									<span>{review.rating} ★</span>
-									<span className="text-xl font-semibold">{review.headline}</span>
-								</p>
-								<p className="mb-2 ml-11 text-neutral-500">Added by: {review.name}</p>
-								<p>{review.content}</p>
-							</div>
-						))}
-					</div>
-				</div>
-			</div>
+			<ReviewsSectionLayout reviews={reviews} productId={productId} />
 		</>
 	);
 }
