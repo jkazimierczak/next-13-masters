@@ -1,0 +1,5 @@
+query CategoryGetNameBySlug($slug: String!) {
+	genres(where: { slug: $slug }) {
+		name
+	}
+}

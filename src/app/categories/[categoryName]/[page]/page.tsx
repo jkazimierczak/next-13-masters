@@ -1,8 +1,10 @@
 import { notFound } from "next/navigation";
+import { type Metadata } from "next";
 import { getProductsByCategorySlug, getProductsCountByCategorySlug } from "@/api/products";
 import { Pagination } from "@/features/Pagination";
 import { ProductList } from "@/features/ProductList/ProductList";
 import { itemsPerPage } from "@/constants";
+import { getCategoryNameBySlug } from "@/api/category";
 
 type CategoryPageParams = {
 	params: {
@@ -11,6 +13,16 @@ type CategoryPageParams = {
 	};
 };
 
+export async function generateMetadata({
+	params: { page, categoryName },
+}: CategoryPageParams): Promise<Metadata> {
+	const prettyCategoryName = await getCategoryNameBySlug(categoryName);
+
+	return {
+		title: `${prettyCategoryName} - page ${page}`,
+	};
+}
+
 export default async function CategoryPage({ params: { page, categoryName } }: CategoryPageParams) {
 	const pageNum = Number(page);
 
@@ -18,6 +30,7 @@ export default async function CategoryPage({ params: { page, categoryName } }: C
 		notFound();
 	}
 
+	const prettyCategoryName = await getCategoryNameBySlug(categoryName);
 	const products = await getProductsByCategorySlug(categoryName, pageNum);
 	if (!products) {
 		notFound();
@@ -29,7 +42,7 @@ export default async function CategoryPage({ params: { page, categoryName } }: C
 		<main className="mx-auto max-w-screen-2xl p-8">
 			<div className="mx-auto w-fit">
 				<header className="mb-4 flex items-center justify-between">
-					<h1 className="border-b border-secondary text-3xl font-bold">{categoryName}</h1>
+					<h1 className="border-b border-secondary text-3xl font-bold">{prettyCategoryName}</h1>
 					<div className="hidden sm:block">
 						<Pagination
 							currentPage={pageNum}
