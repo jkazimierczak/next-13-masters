@@ -11,6 +11,7 @@ const links: { href: Route; name: string; exact: boolean }[] = [
 	{ href: "/products", name: "All", exact: false },
 	{ href: "/categories/pop-and-rock/1" as Route, name: "Pop & Rock", exact: false },
 	{ href: "/categories/reggae-and-dub/1" as Route, name: "Reggae & Dub", exact: false },
+	{ href: "/collections/new-in/1" as Route, name: "New In", exact: false },
 ];
 
 const defaultCartQuantity = 0;
