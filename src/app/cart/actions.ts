@@ -39,8 +39,6 @@ export async function setProductQuantityAction(formData: FormData) {
 }
 
 export async function handlePaymentAction(_formData: FormData) {
-	"use server";
-
 	const stripe = createStripeInstance();
 
 	const cart = await getCart();
