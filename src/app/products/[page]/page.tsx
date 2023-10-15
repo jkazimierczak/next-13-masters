@@ -5,10 +5,15 @@ import { getProducts, getProductsCount } from "@/api/products";
 import { Pagination } from "@/features/Pagination";
 import { itemsPerPage, maxSSGPages } from "@/constants";
 import { getPagesCount } from "@/features/Pagination/getPageCount";
+import { ProductSortSelect } from "@/components/ProductSort/ProductSortSelect";
+import { type ProductOrderByInput } from "@/gql/graphql";
 
 type ProductsPageProps = {
 	params: {
 		page: string;
+	};
+	searchParams: {
+		sort?: ProductOrderByInput;
 	};
 };
 
@@ -26,14 +31,18 @@ export async function generateStaticParams() {
 	return Array.from({ length: ssgPageCount }, (_, i) => ({ page: String(i) }));
 }
 
-export default async function ProductsPage({ params: { page } }: ProductsPageProps) {
+export default async function ProductsPage({
+	params: { page },
+	searchParams: { sort },
+}: ProductsPageProps) {
 	const pageNum = Number(page);
 
 	if (pageNum <= 0 || isNaN(pageNum)) {
 		notFound();
 	}
 
-	const products = await getProducts(pageNum);
+	console.log("products:sortParam", sort);
+	const products = await getProducts(pageNum, sort);
 	const totalProductCount = await getProductsCount();
 
 	return (
@@ -41,6 +50,7 @@ export default async function ProductsPage({ params: { page } }: ProductsPagePro
 			<div className="mx-auto w-fit">
 				<header className="mb-4 flex items-center justify-between">
 					<h1 className="border-b border-secondary text-3xl font-bold">Vinyl Records</h1>
+					<ProductSortSelect />
 					<div className="hidden sm:block">
 						<Pagination
 							currentPage={pageNum}

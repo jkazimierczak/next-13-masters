@@ -1,5 +1,5 @@
-query ProductsGet($count: Int, $offset: Int) {
-	products(first: $count, skip: $offset) {
+query ProductsGet($count: Int, $offset: Int, $orderBy: ProductOrderByInput) {
+	products(first: $count, skip: $offset, orderBy: $orderBy) {
 		...ProductListItem
 	}
 }

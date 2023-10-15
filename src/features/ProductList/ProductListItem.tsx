@@ -21,7 +21,7 @@ export function ProductListItem({
 						<h3 className="text-xl font-bold">{title}</h3>
 					</div>
 					<div className="flex justify-between">
-						<span>{formatPrice(price)}</span>
+						<span data-testid="product-price">{formatPrice(price)}</span>
 						{/*<span className="text-neutral-500">{rating.rate.toFixed(1)} ★</span>*/}
 					</div>
 					<p hidden={true}>{genre}</p>

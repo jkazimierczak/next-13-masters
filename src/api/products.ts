@@ -2,6 +2,7 @@ import { type Product } from "@/features/ProductList/types";
 import { executeGraphQL } from "@/api/graphql";
 import {
 	ProductGetByIdDocument,
+	type ProductOrderByInput,
 	ProductsGetByCollectionSlugDocument,
 	ProductsGetByGenreSlugDocument,
 	ProductsGetBySearchDocument,
@@ -36,11 +37,12 @@ function mapGqlProductsToProducts(products: ProductsGetQuery["products"]) {
 	});
 }
 
-export async function getProducts(page: number): Promise<Product[]> {
+export async function getProducts(page: number, orderBy?: ProductOrderByInput): Promise<Product[]> {
 	const gqlRes = await executeGraphQL({
 		query: ProductsGetDocument,
 		variables: {
 			...preparePaginationArgs(page),
+			orderBy: orderBy,
 		},
 	});
 
