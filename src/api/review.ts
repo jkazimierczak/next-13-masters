@@ -6,7 +6,7 @@ export const reviewFormDataSchema = z.object({
 	productId: z.string().min(1),
 	headline: z.string().min(1),
 	content: z.string().min(1),
-	rating: z.coerce.number().int().min(0).max(5),
+	rating: z.coerce.number().int().min(1).max(5),
 	name: z.string().min(1),
 	email: z.string().email(),
 });

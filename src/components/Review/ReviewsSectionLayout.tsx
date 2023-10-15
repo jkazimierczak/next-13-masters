@@ -1,6 +1,6 @@
 "use client";
 
-import React, { experimental_useOptimistic as useOptimistic } from "react";
+import React, { experimental_useOptimistic as useOptimistic, useRef } from "react";
 import { type ReviewFormData, reviewFormDataSchema } from "@/api/review";
 import { handleReviewFormAction } from "@/app/product/[productId]/actions";
 import { Label } from "@/components/ui/label";
@@ -30,6 +30,11 @@ export function ReviewsSectionLayout({
 		name: "",
 		email: "",
 	});
+	const headlineRef = useRef<HTMLInputElement>(null);
+	const contentRef = useRef<HTMLInputElement>(null);
+	const ratingRef = useRef<HTMLInputElement>(null);
+	const usernameRef = useRef<HTMLInputElement>(null);
+	const emailRef = useRef<HTMLInputElement>(null);
 
 	return (
 		<div className="mt-10 flex gap-10">
@@ -44,37 +49,71 @@ export function ReviewsSectionLayout({
 					<Label htmlFor="headline" className="text-md mb-1 block">
 						Headline
 					</Label>
-					<Input className="mb-2" type="text" name="headline" id="headline" />
+					<Input
+						ref={headlineRef}
+						className="mb-2"
+						type="text"
+						name="headline"
+						id="headline"
+						required
+					/>
 					<Label htmlFor="content" className="text-md mb-1 block">
 						Content
 					</Label>
-					<Input className="mb-2" type="text" name="content" id="content" />
+					<Input
+						ref={contentRef}
+						className="mb-2"
+						type="text"
+						name="content"
+						id="content"
+						required
+					/>
 					<Label htmlFor="rating" className="text-md mb-1 block">
 						Rating
 					</Label>
-					<Input className="mb-2" type="number" name="rating" id="rating" min={0} max={5} />
+					<Input
+						ref={ratingRef}
+						className="mb-2"
+						type="number"
+						name="rating"
+						id="rating"
+						min={1}
+						max={5}
+						required
+					/>
 					<Label htmlFor="username" className="text-md mb-1 block">
 						Username
 					</Label>
-					<Input className="mb-2" type="text" name="username" id="username" />
+					<Input
+						ref={usernameRef}
+						className="mb-2"
+						type="text"
+						name="username"
+						id="username"
+						required
+					/>
 					<Label htmlFor="email" className="text-md mb-1 block">
 						Email
 					</Label>
-					<Input className="mb-2" type="email" name="email" id="email" />
+					<Input ref={emailRef} className="mb-2" type="email" name="email" id="email" required />
 
 					<Button
 						className="mt-2 w-full"
 						formAction={async () => {
 							const newReview = {
 								productId: productId,
-								name: "optimist123",
-								headline: "Optimistic review",
-								content: "Optimistic track, really",
-								email: "optimist@example.com",
-								rating: 3,
+								name: usernameRef.current?.value || "",
+								headline: headlineRef.current?.value || "",
+								content: contentRef.current?.value || "",
+								email: emailRef.current?.value || "",
+								rating: ratingRef.current?.valueAsNumber || 0,
 							};
-							setOptimisticReview(newReview);
-							await handleReviewFormAction(newReview);
+
+							const isValid = isOptimisticReviewValid(newReview);
+							if (isValid) {
+								setOptimisticReview(newReview);
+								await handleReviewFormAction(newReview);
+							}
 						}}
 					>
 						Add review
