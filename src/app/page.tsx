@@ -13,11 +13,11 @@ export default function Homepage() {
 					Browse and shop the best vinyl records and <br className="hidden md:block" />
 					immerse yourself in the true quality of sound.
 				</p>
-				<Link href={"/products"}>
-					<button className="flex rounded bg-primary px-4 py-2 font-bold">
+				<Button asChild>
+					<Link href={"/products"}>
 						Browse all <ArrowRight className="ml-2" />
-					</button>
-				</Link>
+					</Link>
+				</Button>
 			</div>
 			<Image
 				className="-z-10 object-cover"
