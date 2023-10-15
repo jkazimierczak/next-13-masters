@@ -1,7 +1,7 @@
 "use client";
 
 import React, { experimental_useOptimistic as useOptimistic } from "react";
-import { type ReviewFormData } from "@/api/review";
+import { type ReviewFormData, reviewFormDataSchema } from "@/api/review";
 import { handleReviewFormAction } from "@/app/product/[productId]/actions";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -12,6 +12,11 @@ type ReviewSectionLayoutProps = {
 	productId: string;
 	children: React.ReactNode;
 };
+
+function isOptimisticReviewValid(review: ReviewFormData) {
+	const parsed = reviewFormDataSchema.safeParse(review);
+	return parsed.success;
+}
 
 export function ReviewsSectionLayout({
 	productId,
@@ -78,7 +83,11 @@ export function ReviewsSectionLayout({
 			</div>
 			<div className="w-2/3">
 				<h2 className="mb-4 text-4xl font-bold">Reviews</h2>
-				{optimisticReview && <ReviewListItem review={{ id: "", ...optimisticReview }} />}
+				{isOptimisticReviewValid(optimisticReview) && (
+					<div className="animate-pulse">
+						<ReviewListItem review={{ id: "", ...optimisticReview }} />
+					</div>
+				)}
 				{reviewListChildren}
 			</div>
 		</div>
