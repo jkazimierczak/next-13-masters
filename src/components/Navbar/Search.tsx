@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useDebounce } from "@/hooks/useDebounce";
 
@@ -10,18 +10,8 @@ export function Search() {
 	const [inputValue, setInputValue] = useState(searchParams.get("query") || "");
 	const debouncedValue = useDebounce(inputValue, 500);
 
-	const createQueryString = useCallback(
-		(name: string, value: string) => {
-			const params = new URLSearchParams();
-			params.set(name, value);
-
-			return params.toString();
-		},
-		[searchParams],
-	);
-
 	function goToSearchPage(query: string) {
-		router.push(`/search?${createQueryString("query", query)}`);
+		router.push(`/search?query=${encodeURIComponent(query)}`);
 	}
 
 	function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -41,14 +31,13 @@ export function Search() {
 	}, [debouncedValue]);
 
 	return (
-		<>
-			<input
-				type="text"
-				value={inputValue}
-				className="text-red-500"
-				onKeyDownCapture={handleKeyDown}
-				onChange={handleChange}
-			/>
-		</>
+		<input
+			role="searchbox"
+			type="text"
+			value={inputValue}
+			className="text-red-500"
+			onKeyDownCapture={handleKeyDown}
+			onChange={handleChange}
+		/>
 	);
 }
