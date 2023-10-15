@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { type Metadata } from "next";
 import Link from "next/link";
+import React from "react";
 import { ProductImage } from "@/features/ProductList/ProductImage";
 import { ProductList } from "@/features/ProductList/ProductList";
 import { getProductById, getSimilarProducts } from "@/api/products";
@@ -13,6 +14,7 @@ import { AddToCartButton } from "@/app/product/[productId]/AddToCartButton";
 import { addProductToCartAction } from "@/app/cart/actions";
 import { getReviewsByProductId } from "@/api/review";
 import { ReviewsSectionLayout } from "@/components/Review/ReviewsSectionLayout";
+import { ReviewList } from "@/components/Review/ReviewList";
 
 export type ProductPageProps = {
 	params: {
@@ -140,7 +142,14 @@ export default async function ProductPage({
 				</>
 			)}
 
-			<ReviewsSectionLayout reviews={reviews} productId={productId} />
+			<ReviewsSectionLayout productId={productId}>
+				{/* TODO: Handle first-review */}
+				{reviews.length === 0 && <p>This product has no reviews</p>}
+
+				<div>
+					<ReviewList reviews={reviews} />
+				</div>
+			</ReviewsSectionLayout>
 		</>
 	);
 }

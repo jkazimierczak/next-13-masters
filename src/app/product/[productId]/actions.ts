@@ -1,18 +1,9 @@
 "use server";
 
 import { revalidateTag } from "next/cache";
-import { addReview, reviewFormDataSchema } from "@/api/review";
+import { addReview, type ReviewFormData } from "@/api/review";
 
-export async function handleReviewFormAction(formData: FormData) {
-	const parsed = reviewFormDataSchema.parse({
-		productId: formData.get("productId"),
-		headline: formData.get("headline"),
-		content: formData.get("content"),
-		rating: formData.get("rating"),
-		name: formData.get("username"),
-		email: formData.get("email"),
-	});
-
-	await addReview(parsed);
+export async function handleReviewFormAction(formData: ReviewFormData) {
+	await addReview(formData);
 	revalidateTag("reviews");
 }

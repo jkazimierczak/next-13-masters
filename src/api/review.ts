@@ -11,9 +11,9 @@ export const reviewFormDataSchema = z.object({
 	email: z.string().email(),
 });
 
-type ReviewType = z.infer<typeof reviewFormDataSchema>;
+export type ReviewFormData = z.infer<typeof reviewFormDataSchema>;
 
-export async function addReview(review: ReviewType) {
+export async function addReview(review: ReviewFormData) {
 	console.log(review);
 
 	return executeGraphQL({
