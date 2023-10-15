@@ -33,7 +33,7 @@ export function ReviewsSectionLayout({
 	const headlineRef = useRef<HTMLInputElement>(null);
 	const contentRef = useRef<HTMLInputElement>(null);
 	const ratingRef = useRef<HTMLInputElement>(null);
-	const usernameRef = useRef<HTMLInputElement>(null);
+	const nameRef = useRef<HTMLInputElement>(null);
 	const emailRef = useRef<HTMLInputElement>(null);
 
 	return (
@@ -81,17 +81,10 @@ export function ReviewsSectionLayout({
 						max={5}
 						required
 					/>
-					<Label htmlFor="username" className="text-md mb-1 block">
+					<Label htmlFor="name" className="text-md mb-1 block">
 						Username
 					</Label>
-					<Input
-						ref={usernameRef}
-						className="mb-2"
-						type="text"
-						name="username"
-						id="username"
-						required
-					/>
+					<Input ref={nameRef} className="mb-2" type="text" name="name" id="name" required />
 					<Label htmlFor="email" className="text-md mb-1 block">
 						Email
 					</Label>
@@ -102,7 +95,7 @@ export function ReviewsSectionLayout({
 						formAction={async () => {
 							const newReview = {
 								productId: productId,
-								name: usernameRef.current?.value || "",
+								name: nameRef.current?.value || "",
 								headline: headlineRef.current?.value || "",
 								content: contentRef.current?.value || "",
 								email: emailRef.current?.value || "",
