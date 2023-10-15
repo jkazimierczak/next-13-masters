@@ -12,11 +12,11 @@ const nextConfig = {
 		serverActions: true,
 	},
 	compiler: {
-		removeConsole: isProduction
-			? {
-					exclude: ["error"],
-			  }
-			: false,
+		// removeConsole: isProduction
+		// 	? {
+		// 			exclude: ["error"],
+		// 	  }
+		// 	: false,
 	},
 	rewrites: () => {
 		return [
