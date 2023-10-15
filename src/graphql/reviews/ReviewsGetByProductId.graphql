@@ -1,5 +1,5 @@
 query ReviewsGetByProductId($productId: ID!) {
-	reviews(where: { product: { id: $productId } }) {
+	reviews(where: { product: { id: $productId } }, stage: DRAFT) {
 		...Review
 	}
 }
