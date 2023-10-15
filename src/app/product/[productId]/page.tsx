@@ -137,7 +137,7 @@ export default async function ProductPage({
 					</h3>
 					{/* TODO: Fix width alignment */}
 					<div className="mx-auto w-fit">
-						<ProductList products={similarProducts} />
+						<ProductList products={similarProducts} data-testid="related-products" />
 					</div>
 				</>
 			)}
