@@ -12,7 +12,7 @@ import { queryParamsSchema } from "@/app/product/[productId]/queryParamsSchema";
 import { AddToCartButton } from "@/app/product/[productId]/AddToCartButton";
 import { addProductToCartAction } from "@/app/cart/actions";
 
-type ProductPageProps = {
+export type ProductPageProps = {
 	params: {
 		productId: string;
 	};
