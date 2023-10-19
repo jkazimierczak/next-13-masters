@@ -50,7 +50,7 @@ export default async function CollectionPage({
 							currentPage={pageNum}
 							itemsPerPage={itemsPerPage}
 							totalItems={totalProductCount}
-							link={`/categories/${collectionName}`}
+							link={`/collections/${collectionName}`}
 						/>
 					</div>
 				</header>
@@ -60,7 +60,7 @@ export default async function CollectionPage({
 						currentPage={pageNum}
 						itemsPerPage={itemsPerPage}
 						totalItems={totalProductCount}
-						link={`/categories/${collectionName}`}
+						link={`/collections/${collectionName}`}
 					/>
 				</div>
 			</div>
