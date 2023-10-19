@@ -41,7 +41,6 @@ export default async function ProductsPage({
 		notFound();
 	}
 
-	console.log("products:sortParam", sort);
 	const products = await getProducts(pageNum, sort);
 	const totalProductCount = await getProductsCount();
 

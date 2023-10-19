@@ -23,7 +23,6 @@ export async function POST(request: NextRequest): Promise<Response> {
 	let body: unknown;
 	try {
 		body = await request.json();
-		console.dir(body, { depth: 99 });
 	} catch (err) {
 		return new Response("Invalid request body", { status: 500 });
 	}
