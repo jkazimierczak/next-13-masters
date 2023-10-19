@@ -11,7 +11,6 @@ const links: { href: Route; name: string; exact: boolean }[] = [
 	{ href: "/products", name: "All", exact: false },
 	{ href: "/categories/pop-and-rock/1" as Route, name: "Pop & Rock", exact: false },
 	{ href: "/categories/reggae-and-dub/1" as Route, name: "Reggae & Dub", exact: false },
-	{ href: "/collections/new-in/1" as Route, name: "New In", exact: false },
 ];
 
 const defaultCartQuantity = 0;
@@ -24,20 +23,25 @@ export async function Navbar() {
 
 	return (
 		<div className="sticky flex w-full items-center justify-between bg-background px-5 py-4 text-white shadow md:px-12 lg:px-24">
-			<nav className="flex items-center gap-8">
-				<Link href="/">
-					<Image width={36} height={36} src="/logo.svg" alt="Logo" />
-				</Link>
-				<ul className="flex w-fit gap-6" role="navigation">
-					{links.map(({ href, name, exact }) => (
-						<li key={href}>
-							<ActiveLink href={href} exact={exact}>
-								{name}
-							</ActiveLink>
-						</li>
-					))}
-				</ul>
-			</nav>
+			<div className="flex items-center gap-8">
+				<nav className="flex items-center gap-8">
+					<Link href="/">
+						<Image width={36} height={36} src="/logo.svg" alt="Logo" />
+					</Link>
+					<ul className="flex w-fit gap-6" role="navigation">
+						{links.map(({ href, name, exact }) => (
+							<li key={href}>
+								<ActiveLink href={href} exact={exact}>
+									{name}
+								</ActiveLink>
+							</li>
+						))}
+					</ul>
+				</nav>
+				<ActiveLink href="/collections/new-in/1" exact={false}>
+					New In
+				</ActiveLink>
+			</div>
 
 			<Search />
 
