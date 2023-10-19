@@ -1,0 +1,10 @@
+query ReviewsGetRatingAndCountByProductId($productId: ID!) {
+	reviews(where: { product: { id: $productId } }, stage: DRAFT, orderBy: createdAt_DESC) {
+		rating
+	}
+	reviewsConnection(where: { product: { id: $productId } }, stage: DRAFT) {
+		aggregate {
+			count
+		}
+	}
+}

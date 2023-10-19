@@ -1,6 +1,11 @@
 import { z } from "zod";
 import { executeGraphQL } from "@/api/graphql";
-import { ReviewsGetByProductIdDocument, ReviewAddDocument } from "@/gql/graphql";
+import {
+	ReviewsGetByProductIdDocument,
+	ReviewAddDocument,
+	ReviewsGetRatingAndCountByProductIdDocument,
+	ReviewsUpdateProductAverageRatingDocument,
+} from "@/gql/graphql";
 
 export const reviewFormDataSchema = z.object({
 	productId: z.string().min(1),
@@ -38,4 +43,29 @@ export async function getReviewsByProductId(productId: string) {
 		},
 	});
 	return res.reviews;
+}
+
+export async function calculateAverageProductRatingById(productId: string) {
+	const res = await executeGraphQL({
+		query: ReviewsGetRatingAndCountByProductIdDocument,
+		variables: {
+			productId,
+		},
+		cache: "no-store",
+	});
+	const totalRating = res.reviews.reduce((acc, review) => acc + (review.rating ?? 0), 0);
+	const reviewCount = res.reviewsConnection.aggregate.count;
+	return totalRating / reviewCount;
+}
+
+export async function updateAverageProductRating(productId: string) {
+	const averageRating = await calculateAverageProductRatingById(productId);
+
+	return executeGraphQL({
+		query: ReviewsUpdateProductAverageRatingDocument,
+		variables: {
+			productId,
+			averageRating,
+		},
+	});
 }
