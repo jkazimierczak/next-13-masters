@@ -1,6 +1,7 @@
 import { type NextRequest } from "next/server";
 import { z } from "zod";
 import { updateAverageProductRating } from "@/api/review";
+import { publishProduct } from "@/api/products";
 
 const revalidateProductSchema = z.object({
 	operation: z.string(),
@@ -35,6 +36,7 @@ export async function POST(request: NextRequest): Promise<Response> {
 		const productId = payload.data.product.id;
 
 		await updateAverageProductRating(productId);
+		await publishProduct(productId);
 
 		return new Response(null, { status: 204 });
 	}

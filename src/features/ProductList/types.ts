@@ -5,6 +5,7 @@ export type Product = {
 	description?: string;
 	genre: string;
 	images?: ProductImage[];
+	averageRating?: number;
 };
 
 type ProductImage = {

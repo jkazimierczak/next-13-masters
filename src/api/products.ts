@@ -3,6 +3,7 @@ import { executeGraphQL } from "@/api/graphql";
 import {
 	ProductGetByIdDocument,
 	type ProductOrderByInput,
+	ProductPublishDocument,
 	ProductsGetByCollectionSlugDocument,
 	ProductsGetByGenreSlugDocument,
 	ProductsGetBySearchDocument,
@@ -22,7 +23,7 @@ function preparePaginationArgs(page: number) {
 	};
 }
 
-function mapGqlProductsToProducts(products: ProductsGetQuery["products"]) {
+function mapGqlProductsToProducts(products: ProductsGetQuery["products"]): Product[] {
 	return products.map((p) => {
 		return {
 			id: p.id,
@@ -33,6 +34,7 @@ function mapGqlProductsToProducts(products: ProductsGetQuery["products"]) {
 				src: img.url,
 				alt: p.name,
 			})),
+			averageRating: p.averageRating ?? undefined,
 		};
 	});
 }
@@ -168,4 +170,13 @@ export async function getProductsCountByCollectionSlug(slug: string) {
 	});
 
 	return gqlRes.productsConnection.aggregate.count;
+}
+
+export async function publishProduct(productId: string) {
+	await executeGraphQL({
+		query: ProductPublishDocument,
+		variables: {
+			productId,
+		},
+	});
 }

@@ -1,0 +1,5 @@
+mutation ProductPublish($productId: ID!) {
+	publishProduct(where: { id: $productId }, to: PUBLISHED) {
+		id
+	}
+}
