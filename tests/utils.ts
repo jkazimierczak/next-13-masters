@@ -12,7 +12,7 @@ export async function openRandomProductPage({ page }: { page: Page }) {
 	await expect(async () => {
 		await randomProductLink.click();
 		await expect(page.locator('[aria-busy="true"]')).toHaveCount(0);
-		await page.waitForURL("**/product/**", { timeout: 100 });
+		await page.waitForURL("**/product/**", { timeout: 250 });
 		await expect(page.locator('[aria-busy="true"]')).toHaveCount(0);
 	}).toPass();
 }
@@ -27,6 +27,7 @@ export async function getProductPrices({ page }: { page: Page }) {
 	).map((el) => Number.parseFloat((el || "")?.replace("$", "").replace(",", ".").trim()));
 	return parsedPrices;
 }
+
 export async function getProductRatings({ page }: { page: Page }) {
 	const productRatings = page.getByTestId("products-list").getByTestId("product-rating");
 	if ((await productRatings.count()) === 0) {
@@ -48,6 +49,7 @@ export function isNonDecresing(arr: number[]): boolean {
 	}
 	return true;
 }
+
 export function isNonIncreasing(arr: number[]): boolean {
 	for (let i = 1; i < arr.length; ++i) {
 		if (arr[i] > arr[i - 1]) {

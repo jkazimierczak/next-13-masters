@@ -27,7 +27,7 @@ test.describe("Module 1", () => {
 
 		const NodeVersion = getVersion(info.Binaries.Node);
 		const pnpmVersion = getVersion(info.Binaries.pnpm);
-		// const VSCodeVersion = getVersion(info.IDEs.VSCode);
+		const VSCodeVersion = getVersion(info.IDEs.VSCode);
 		const GitVersion = getVersion(info.Utilities.Git);
 
 		expect(
@@ -38,10 +38,10 @@ test.describe("Module 1", () => {
 			semver.satisfies(pnpmVersion, ">=8.6.0"),
 			`Expected pnpm version newer than 8.6.0 but got ${pnpmVersion}`,
 		).toBe(true);
-		// expect(
-		// 	semver.satisfies(VSCodeVersion, ">=1.7.0"),
-		// 	`Expected VSCode version newer than 1.7.0 but got ${VSCodeVersion}`,
-		// ).toBe(true);
+		expect(
+			semver.satisfies(VSCodeVersion, ">=1.7.0"),
+			`Expected VSCode version newer than 1.7.0 but got ${VSCodeVersion}`,
+		).toBe(true);
 		expect(
 			semver.satisfies(GitVersion, ">=2.23.0"),
 			`Expected Git version newer than 2.23.0 but got ${GitVersion}`,
