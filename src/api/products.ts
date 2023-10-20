@@ -136,6 +136,7 @@ export async function getProductById(productId: string) {
 			src: img.url,
 			alt: p.name,
 		})),
+		averageRating: p.averageRating,
 		regularEdition: p.regularEdition,
 		deluxeEdition: p.deluxeEdition,
 		formats: p.formats,
