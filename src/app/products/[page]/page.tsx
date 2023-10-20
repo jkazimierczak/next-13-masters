@@ -49,14 +49,16 @@ export default async function ProductsPage({
 			<div className="mx-auto w-fit">
 				<header className="mb-4 flex items-center justify-between">
 					<h1 className="border-b border-secondary text-3xl font-bold">Vinyl Records</h1>
-					<ProductSortSelect />
-					<div className="hidden sm:block">
-						<Pagination
-							currentPage={pageNum}
-							itemsPerPage={itemsPerPage}
-							totalItems={totalProductCount}
-							link={"/products"}
-						/>
+					<div className="flex items-center gap-4">
+						<ProductSortSelect />
+						<div className="hidden sm:block">
+							<Pagination
+								currentPage={pageNum}
+								itemsPerPage={itemsPerPage}
+								totalItems={totalProductCount}
+								link={"/products"}
+							/>
+						</div>
 					</div>
 				</header>
 				<ProductList products={products} data-testid="products-list" />

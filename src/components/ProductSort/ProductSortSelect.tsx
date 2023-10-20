@@ -26,8 +26,13 @@ export function ProductSortSelect() {
 	}
 
 	return (
-		<select name="productOrder" defaultValue={sortOrder} onChange={handleSortSelectChange}>
-			<option value="none">Sort by:</option>
+		<select
+			name="productOrder"
+			className="w-48 rounded border border-neutral-200 bg-white px-4 py-2 font-sans"
+			defaultValue={sortOrder}
+			onChange={handleSortSelectChange}
+		>
+			<option value="none">Default order</option>
 			<option value="price_ASC" data-testid="sort-by-price">
 				Price: low to high
 			</option>
