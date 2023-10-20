@@ -43,16 +43,18 @@ export async function Navbar() {
 				</ActiveLink>
 			</div>
 
-			<Search />
+			<div className="flex items-center gap-4">
+				<Search />
 
-			<Link href={"/cart"}>
-				<div className="flex items-center gap-2">
-					<span className="h-6 w-6 rounded-full bg-primary text-center text-sm font-semibold">
-						{quantity}
-					</span>
-					<ShoppingCart />
-				</div>
-			</Link>
+				<Link href={"/cart"}>
+					<div className="flex items-center gap-2">
+						<span className="h-6 w-6 rounded-full bg-primary text-center text-sm font-semibold">
+							{quantity}
+						</span>
+						<ShoppingCart />
+					</div>
+				</Link>
+			</div>
 		</div>
 	);
 }

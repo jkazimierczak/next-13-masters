@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useDebounce } from "@/hooks/useDebounce";
+import { Input } from "@/components/ui/input";
 
 export function Search() {
 	const router = useRouter();
@@ -31,11 +32,11 @@ export function Search() {
 	}, [debouncedValue]);
 
 	return (
-		<input
+		<Input
 			role="searchbox"
 			type="text"
 			value={inputValue}
-			className="text-red-500"
+			className="text-black"
 			onKeyDownCapture={handleKeyDown}
 			onChange={handleChange}
 		/>
