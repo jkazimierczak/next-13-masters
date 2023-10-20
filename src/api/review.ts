@@ -6,6 +6,7 @@ import {
 	ReviewsGetRatingAndCountByProductIdDocument,
 	ReviewsUpdateProductAverageRatingDocument,
 } from "@/gql/graphql";
+import { FetchTag } from "@/lib/fetchtag";
 
 export const reviewFormDataSchema = z.object({
 	productId: z.string().min(1),
@@ -27,7 +28,7 @@ export async function addReview(review: ReviewFormData) {
 			...review,
 		},
 		next: {
-			tags: ["reviews"],
+			tags: [FetchTag.REVIEWS],
 		},
 	});
 }
@@ -39,7 +40,7 @@ export async function getReviewsByProductId(productId: string) {
 			productId,
 		},
 		next: {
-			tags: ["reviews"],
+			tags: [FetchTag.REVIEWS],
 		},
 	});
 	return res.reviews;

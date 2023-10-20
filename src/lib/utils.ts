@@ -2,6 +2,7 @@ import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { revalidateTag } from "next/cache";
 import { type Product } from "@/features/ProductList/types";
+import { FetchTag } from "@/lib/fetchtag";
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -36,5 +37,5 @@ export async function withRevalidate<T extends AsyncFunction>(func: T, tag: stri
 }
 
 export async function withRevalidateCart<T extends AsyncFunction>(func: T) {
-	return withRevalidate(func, "cart");
+	return withRevalidate(func, FetchTag.CART);
 }

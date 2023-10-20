@@ -10,6 +10,7 @@ import {
 	ProductGetByIdDocument,
 } from "@/gql/graphql";
 import { isProduction } from "@/constants";
+import { FetchTag } from "@/lib/fetchtag";
 
 async function getCartById(cartId: string) {
 	return executeGraphQL({
@@ -18,7 +19,7 @@ async function getCartById(cartId: string) {
 			id: cartId,
 		},
 		next: {
-			tags: ["cart"],
+			tags: [FetchTag.CART],
 		},
 	});
 }
@@ -37,7 +38,7 @@ async function createCart() {
 	return executeGraphQL({
 		query: CartCreateDocument,
 		next: {
-			tags: ["cart"],
+			tags: [FetchTag.CART],
 		},
 	});
 }
@@ -68,7 +69,7 @@ export async function addToCart(productId: string) {
 		query: ProductGetByIdDocument,
 		variables: { id: productId },
 		next: {
-			tags: ["cart"],
+			tags: [FetchTag.CART],
 		},
 	});
 
@@ -98,7 +99,7 @@ export async function addNewProductToCart(productId: string, orderId: string, pr
 			total: price,
 		},
 		next: {
-			tags: ["cart"],
+			tags: [FetchTag.CART],
 		},
 	});
 }
