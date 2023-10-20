@@ -35,7 +35,7 @@ export function Pagination<T extends string>({
 			>
 				<ArrowLeft />
 			</Link>
-			<p>
+			<p className="tabular-nums">
 				{currentPage} of {pages}
 			</p>
 			<Link
