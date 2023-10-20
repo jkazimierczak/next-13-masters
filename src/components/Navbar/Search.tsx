@@ -35,6 +35,7 @@ export function Search() {
 		<Input
 			role="searchbox"
 			type="text"
+			placeholder="Search for product"
 			value={inputValue}
 			className="text-black"
 			onKeyDownCapture={handleKeyDown}
