@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronsRight, Disc3 } from "lucide-react";
 import Link from "next/link";
 import { ProductList } from "@/features/ProductList/ProductList";
 import { getProducts } from "@/api/products";
@@ -30,8 +30,18 @@ export default async function Homepage() {
 				alt="Landing page background - A record player spinning a record on a turntable."
 				fill
 			/>
-			<div className="mx-auto">
-				<ProductList products={products} data-testid="products-list" />
+			<div className="mx-24 flex gap-6">
+				<ProductList products={products} showLess={true} data-testid="products-list" />
+				<Link
+					href={"/products/1"}
+					className="flex h-72 items-center justify-between rounded bg-background p-4 text-xl font-bold uppercase text-primary [writing-mode:vertical-rl]"
+				>
+					<div className="flex items-center gap-4">
+						<Disc3 />
+						Explore more
+					</div>
+					<ChevronsRight />
+				</Link>
 			</div>
 		</div>
 	);
