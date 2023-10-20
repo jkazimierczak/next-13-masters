@@ -1,3 +1,6 @@
+import "./src/env.mjs";
+import withMDX from "@next/mdx";
+
 const isProduction = process.env.NODE_ENV === "production";
 
 /** @type {import('next').NextConfig} */
@@ -36,5 +39,5 @@ const nextConfig = {
 	},
 };
 
-const withMDX = require("@next/mdx")();
-module.exports = withMDX(nextConfig);
+const configWithMDX = withMDX();
+export default configWithMDX(nextConfig);

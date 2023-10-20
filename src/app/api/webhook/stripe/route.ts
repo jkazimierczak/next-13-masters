@@ -2,13 +2,9 @@
 import { type NextRequest } from "next/server";
 import type Stripe from "stripe";
 import { createStripeInstance } from "@/lib/stripe";
+import { env } from "@/env.mjs";
 
 export async function POST(request: NextRequest): Promise<Response> {
-	const stripeWebhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
-	if (!stripeWebhookSecret) {
-		throw new Error("STRIPE_WEBHOOK_SECRET is not defined");
-	}
-
 	const stripe = createStripeInstance();
 
 	const signature = request.headers.get("stripe-signature");
@@ -19,7 +15,7 @@ export async function POST(request: NextRequest): Promise<Response> {
 	const event = stripe.webhooks.constructEvent(
 		await request.text(),
 		signature,
-		stripeWebhookSecret,
+		env.STRIPE_WEBHOOK_SECRET,
 	) as Stripe.DiscriminatedEvent;
 
 	switch (event.type) {

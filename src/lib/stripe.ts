@@ -1,7 +1,8 @@
 import Stripe from "stripe";
+import { env } from "@/env.mjs";
 
 export function createStripeInstance() {
-	const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+	const stripeSecretKey = env.STRIPE_SECRET_KEY;
 
 	if (!stripeSecretKey) {
 		throw new Error("STRIPE_SECRET_KEY is not defined");

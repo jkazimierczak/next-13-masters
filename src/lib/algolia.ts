@@ -1,5 +1,6 @@
 import AlgoliaSearch from "algoliasearch";
 import { type getProductById } from "@/api/products";
+import { env } from "@/env.mjs";
 
 export type AlgoliaProductRecord = {
 	objectID: string;
@@ -21,14 +22,5 @@ export function mapProductToAlgoliaRecord(
 	};
 }
 
-const algoliaAppId = process.env.ALGOLIA_APPID;
-if (!algoliaAppId) {
-	throw TypeError("ALGOLIA_APPID is not defined");
-}
-const algoliaApiKey = process.env.ALGOLIA_API_KEY;
-if (!algoliaApiKey) {
-	throw TypeError("ALGOLIA_APPID is not defined");
-}
-
-const client = AlgoliaSearch(algoliaAppId, algoliaApiKey);
+const client = AlgoliaSearch(env.ALGOLIA_APPID, env.ALGOLIA_API_KEY);
 export const algoliaIndex = client.initIndex("Products");

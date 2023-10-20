@@ -2,6 +2,7 @@ import { type NextRequest } from "next/server";
 import { z } from "zod";
 import { updateAverageProductRating } from "@/api/review";
 import { publishProduct } from "@/api/products";
+import { env } from "@/env.mjs";
 
 const revalidateProductSchema = z.object({
 	operation: z.string(),
@@ -13,13 +14,8 @@ const revalidateProductSchema = z.object({
 });
 
 export async function POST(request: NextRequest): Promise<Response> {
-	const webhookSecret = process.env.WEBHOOK_SECRET;
-	if (!webhookSecret) {
-		throw new Error("WEBHOOK_SECRET is not defined");
-	}
-
 	const requestKey = request.headers.get("X-API-KEY");
-	if (requestKey !== webhookSecret) {
+	if (requestKey !== env.WEBHOOK_SECRET) {
 		return new Response("Invalid credentials", { status: 401 });
 	}
 

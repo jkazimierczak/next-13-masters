@@ -1,5 +1,6 @@
 import { type GraphQLResponse } from "@/types/GraphQLResponse";
 import { type TypedDocumentString } from "@/gql/graphql";
+import { env } from "@/env.mjs";
 
 export async function executeGraphQL<TResult, TVariables>({
 	query,
@@ -15,15 +16,7 @@ export async function executeGraphQL<TResult, TVariables>({
 } & (TVariables extends { [key: string]: never }
 	? { variables?: never }
 	: { variables: TVariables })): Promise<TResult> {
-	if (!process.env.GRAPHQL_URL) {
-		throw TypeError("GRAPHQL_URL is not defined");
-	}
-
-	if (!process.env.HYGRAPH_TOKEN) {
-		throw TypeError("HYGRAPH_TOKEN is not defined");
-	}
-
-	const res = await fetch(process.env.GRAPHQL_URL, {
+	const res = await fetch(env.GRAPHQL_URL, {
 		method: "POST",
 		body: JSON.stringify({
 			query,
@@ -34,7 +27,7 @@ export async function executeGraphQL<TResult, TVariables>({
 		headers: {
 			...headers,
 			"Content-Type": "application/json",
-			Authorization: `Bearer ${process.env.HYGRAPH_TOKEN}`,
+			Authorization: `Bearer ${env.HYGRAPH_MUTATION_TOKEN}`,
 		},
 	});
 
