@@ -6,5 +6,8 @@ fragment OrderItem on OrderItem {
 		id
 		name
 		price
+		images {
+			url
+		}
 	}
 }
