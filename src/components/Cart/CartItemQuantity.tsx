@@ -12,20 +12,24 @@ type CartItemQuantity = {
 export function CartItemQuantity({ quantity, itemId }: CartItemQuantity) {
 	const [optimisticQuantity, setOptimisticQuantity] = useOptimistic(quantity);
 
+	async function incrementQuantity(formData: FormData) {
+		setOptimisticQuantity(optimisticQuantity + 1);
+		await setProductQuantityAction(formData);
+	}
+
+	async function decrementQuantity(formData: FormData) {
+		if (optimisticQuantity > 0) {
+			setOptimisticQuantity(optimisticQuantity - 1);
+		}
+		await setProductQuantityAction(formData);
+	}
+
 	return (
 		<div className="flex items-stretch divide-x divide-neutral-500 border border-neutral-500">
 			<form action={setProductQuantityAction}>
 				<input type="text" name="itemId" value={itemId} hidden readOnly />
 				<input type="text" name="itemQuantity" value={optimisticQuantity - 1} hidden readOnly />
-				<Button
-					data-testid="decrement"
-					formAction={async (formData) => {
-						setOptimisticQuantity(optimisticQuantity - 1);
-						await setProductQuantityAction(formData);
-					}}
-					variant="ghost"
-					size="icon"
-				>
+				<Button data-testid="decrement" formAction={decrementQuantity} variant="ghost" size="icon">
 					-
 				</Button>
 			</form>
@@ -37,15 +41,7 @@ export function CartItemQuantity({ quantity, itemId }: CartItemQuantity) {
 			<form action={setProductQuantityAction}>
 				<input type="text" name="itemId" value={itemId} hidden readOnly />
 				<input type="text" name="itemQuantity" value={optimisticQuantity + 1} hidden readOnly />
-				<Button
-					data-testid="increment"
-					formAction={async (formData) => {
-						setOptimisticQuantity(optimisticQuantity + 1);
-						await setProductQuantityAction(formData);
-					}}
-					variant="ghost"
-					size="icon"
-				>
+				<Button data-testid="increment" formAction={incrementQuantity} variant="ghost" size="icon">
 					+
 				</Button>
 			</form>
