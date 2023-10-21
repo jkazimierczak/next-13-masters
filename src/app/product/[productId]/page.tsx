@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { type Metadata } from "next";
 import Link from "next/link";
 import React from "react";
+import { MDXRemote } from "next-mdx-remote/rsc";
 import { ProductImage } from "@/features/ProductList/ProductImage";
 import { ProductList } from "@/features/ProductList/ProductList";
 import { getProductById, getSimilarProducts } from "@/api/products";
@@ -126,7 +127,9 @@ export default async function ProductPage({
 						</div>
 					)}
 
-					<p className="mt-6 md:text-justify">{product.description}</p>
+					<div className="prose prose-neutral mt-6 prose-li:my-0 prose-li:mb-1">
+						<MDXRemote source={product.description} />
+					</div>
 				</div>
 			</div>
 
