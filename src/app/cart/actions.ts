@@ -63,7 +63,7 @@ export async function handlePaymentAction(_formData: FormData) {
 			quantity: item.quantity,
 		})),
 		success_url: "http://localhost:3000/cart/success?sessionId={CHECKOUT_SESSION_ID}",
-		cancel_url: "http://localhost:3000/cart/cancel",
+		cancel_url: "http://localhost:3000/cart/cancel?sessionId={CHECKOUT_SESSION_ID}",
 	});
 
 	if (!checkoutSession.url) {
