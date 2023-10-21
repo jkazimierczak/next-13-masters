@@ -7,7 +7,6 @@ import {
 	ProductsGetByCollectionSlugDocument,
 	ProductsGetByGenreSlugDocument,
 	ProductsGetByIdsDocument,
-	ProductsGetBySearchDocument,
 	ProductsGetCountByCollectionSlugDocument,
 	ProductsGetCountByGenreSlugDocument,
 	ProductsGetCountDocument,
@@ -52,18 +51,17 @@ export async function getProducts(page: number, orderBy?: ProductOrderByInput): 
 	return mapGqlProductsToProducts(gqlRes.products);
 }
 
-export async function getProductsBySearch(query: string, page: number): Promise<Product[]> {
+export async function getProductsBySearch(query: string): Promise<Product[]> {
 	const { hits: searchResults } = await algoliaIndex.search(query, {
-		attributesToRetrieve: ["objectID", "name"],
+		attributesToRetrieve: ["objectID"],
 		attributesToHighlight: [],
 	});
-	console.dir(searchResults);
+	const foundProductsIds = searchResults.map((productHit) => productHit.objectID);
 
 	const gqlRes = await executeGraphQL({
-		query: ProductsGetBySearchDocument,
+		query: ProductsGetByIdsDocument,
 		variables: {
-			query: query,
-			...preparePaginationArgs(page),
+			productIds: foundProductsIds,
 		},
 	});
 
@@ -120,6 +118,7 @@ export async function getSimilarProducts(genreName: string, excludedProductId: s
 		query: ProductsGetByIdsDocument,
 		variables: {
 			productIds: recommendedProductsIds,
+			count: 6,
 		},
 	});
 

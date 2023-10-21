@@ -1,5 +1,5 @@
-query ProductsGetByIds($productIds: [ID!]!) {
-	products(where: { id_in: $productIds }, first: 6) {
+query ProductsGetByIds($productIds: [ID!]!, $count: Int, $offset: Int) {
+	products(where: { id_in: $productIds }, first: $count, skip: $offset) {
 		...ProductListItem
 	}
 }

@@ -8,7 +8,7 @@ type SearchPageProps = {
 };
 
 export default async function SearchPage({ searchParams: { query } }: SearchPageProps) {
-	const products = await getProductsBySearch(query, 0);
+	const products = await getProductsBySearch(query);
 
 	return (
 		<main className="mx-auto max-w-screen-2xl p-8">
