@@ -6,15 +6,16 @@ import {
 	ProductPublishDocument,
 	ProductsGetByCollectionSlugDocument,
 	ProductsGetByGenreSlugDocument,
+	ProductsGetByIdsDocument,
 	ProductsGetBySearchDocument,
 	ProductsGetCountByCollectionSlugDocument,
 	ProductsGetCountByGenreSlugDocument,
 	ProductsGetCountDocument,
 	ProductsGetDocument,
 	type ProductsGetQuery,
-	ProductsGetSimilarByGenreNameDocument,
 } from "@/gql/graphql";
 import { itemsPerPage } from "@/constants";
+import { algoliaIndex } from "@/lib/algolia";
 
 function preparePaginationArgs(page: number) {
 	return {
@@ -52,6 +53,12 @@ export async function getProducts(page: number, orderBy?: ProductOrderByInput): 
 }
 
 export async function getProductsBySearch(query: string, page: number): Promise<Product[]> {
+	const { hits: searchResults } = await algoliaIndex.search(query, {
+		attributesToRetrieve: ["objectID", "name"],
+		attributesToHighlight: [],
+	});
+	console.dir(searchResults);
+
 	const gqlRes = await executeGraphQL({
 		query: ProductsGetBySearchDocument,
 		variables: {
@@ -102,11 +109,17 @@ export async function getProductsByCollectionSlug(
 }
 
 export async function getSimilarProducts(genreName: string, excludedProductId: string) {
+	const { hits: recommendedProducts } = await algoliaIndex.search(genreName, {
+		filters: `NOT objectID:${excludedProductId}`,
+		attributesToRetrieve: ["objectID"],
+		attributesToHighlight: [],
+	});
+	const recommendedProductsIds = recommendedProducts.map((productHit) => productHit.objectID);
+
 	const gqlRes = await executeGraphQL({
-		query: ProductsGetSimilarByGenreNameDocument,
+		query: ProductsGetByIdsDocument,
 		variables: {
-			genreName,
-			excludedProductId,
+			productIds: recommendedProductsIds,
 		},
 	});
 
