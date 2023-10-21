@@ -4,7 +4,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { type ChangeEvent } from "react";
 import { type Route } from "next";
 
-const defaultSortOrder = "none";
+export const defaultSortOrder = "none";
 
 export function ProductSortSelect() {
 	const pathname = usePathname();
