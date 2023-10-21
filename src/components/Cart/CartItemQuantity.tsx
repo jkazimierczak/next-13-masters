@@ -13,7 +13,7 @@ export function CartItemQuantity({ quantity, itemId }: CartItemQuantity) {
 	const [optimisticQuantity, setOptimisticQuantity] = useOptimistic(quantity);
 
 	return (
-		<div className="flex items-stretch border border-neutral-500">
+		<div className="flex items-stretch divide-x divide-neutral-500 border border-neutral-500">
 			<form action={setProductQuantityAction}>
 				<input type="text" name="itemId" value={itemId} hidden readOnly />
 				<input type="text" name="itemQuantity" value={optimisticQuantity - 1} hidden readOnly />
@@ -29,7 +29,7 @@ export function CartItemQuantity({ quantity, itemId }: CartItemQuantity) {
 					-
 				</Button>
 			</form>
-			<div className="grid w-12 items-center border border-y-0 border-x-neutral-500">
+			<div className="grid w-12 items-center">
 				<span className="text-center" data-testid="quantity">
 					{optimisticQuantity}
 				</span>
