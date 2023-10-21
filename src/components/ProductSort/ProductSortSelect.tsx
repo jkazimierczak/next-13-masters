@@ -43,7 +43,7 @@ export function ProductSortSelect() {
 				Rating: low to high
 			</option>
 			<option value="averageRating_DESC" data-testid="sort-by-rating">
-				Price: high to low
+				Rating: high to low
 			</option>
 		</select>
 	);
