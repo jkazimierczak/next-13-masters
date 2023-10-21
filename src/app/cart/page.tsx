@@ -33,7 +33,7 @@ export default async function CartPage() {
 				<CartItemList orderItems={validOrderItems} />
 			</div>
 
-			<div>
+			<div className="h-fit rounded border-neutral-300 xl:border xl:p-4">
 				<p className="mb-2 flex justify-between">
 					<span>Total to pay:</span>
 					<span className="font-bold">{formatPrice(totalCartValue)}</span>
