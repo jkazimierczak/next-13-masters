@@ -15,7 +15,7 @@ export function CartItem({ item }: CartItemProps) {
 		<article>
 			<header className="mb-2 flex items-center">
 				<div className="flex flex-grow items-center gap-2.5">
-					<Link href={`/product/${item.product?.id}`}>
+					<Link href={`/product/${item.product?.id}`} className="flex-shrink-0">
 						<Image
 							width={64}
 							height={64}
