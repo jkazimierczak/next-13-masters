@@ -2,26 +2,36 @@
 
 import { type Route } from "next";
 import Link from "next/link";
-import { clsx } from "clsx";
 import React from "react";
 import { useActiveLink } from "@/features/ActiveLink/useActiveLink";
+import { cn } from "@/lib/utils";
 
 type ActiveLinkProps<T extends string> = {
 	children: React.ReactNode;
 	href: Route<T>;
 	exact: boolean;
+	className?: string;
 };
 
-export function ActiveLink<T extends string>({ children, href, exact }: ActiveLinkProps<T>) {
+export function ActiveLink<T extends string>({
+	children,
+	href,
+	exact,
+	className,
+}: ActiveLinkProps<T>) {
 	const { isActive } = useActiveLink({ href, exact });
 
 	return (
 		<Link
 			href={href}
 			aria-current={isActive ? true : undefined}
-			className={clsx({
-				"border-b border-primary text-primary": isActive,
-			})}
+			className={cn(
+				{
+					"min-w-fit": true,
+					"border-b border-primary text-primary": isActive,
+				},
+				className,
+			)}
 		>
 			{children}
 		</Link>
