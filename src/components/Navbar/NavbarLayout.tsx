@@ -34,12 +34,12 @@ export function NavbarLayout({ cartNode }: NavbarLayoutProps) {
 				"sticky w-full bg-background py-4 text-white shadow": true,
 			})}
 		>
-			<div className="flex items-center justify-between gap-3 sm:flex-row">
+			<div className="flex items-center justify-between gap-3 md:flex-row">
 				<div className="flex items-center gap-3">
 					<Link href="/" className="flex-shrink-0">
 						<Image width={36} height={36} src="/logo.svg" alt="Logo" />
 					</Link>
-					<div className="hidden sm:block">{menuNode}</div>
+					<div className="hidden md:block">{menuNode}</div>
 				</div>
 
 				<div className="flex items-center gap-3">
@@ -47,13 +47,13 @@ export function NavbarLayout({ cartNode }: NavbarLayoutProps) {
 						<Search />
 					</div>
 					{cartNode}
-					<Button onClick={toggleMenuOpen} size="icon" className="flex-shrink-0 sm:hidden">
+					<Button onClick={toggleMenuOpen} size="icon" className="flex-shrink-0 md:hidden">
 						{isMenuOpen ? <X /> : <Menu />}
 					</Button>
 				</div>
 			</div>
 
-			{isMenuOpen && <div className="order-3 mt-3 w-full sm:hidden">{menuNode}</div>}
+			{isMenuOpen && <div className="order-3 mt-3 w-full md:hidden">{menuNode}</div>}
 		</ScreenMarginLayout>
 	);
 }

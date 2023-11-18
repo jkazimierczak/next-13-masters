@@ -7,11 +7,11 @@ type NavbarMenuProps = {
 
 export function NavbarMenu({ links }: NavbarMenuProps) {
 	return (
-		<div className="flex flex-col items-start gap-4 sm:flex-row">
+		<div className="flex flex-col items-start gap-4 md:flex-row">
 			<nav className="w-full min-w-fit">
-				<ul className="flex w-fit flex-col items-start gap-4 sm:flex-row" role="navigation">
+				<ul className="flex w-fit flex-col items-start gap-4 md:flex-row" role="navigation">
 					{links.map(({ href, name, exact }) => (
-						<li key={href}>
+						<li key={href} className="min-w-fit">
 							<ActiveLink href={href} exact={exact}>
 								{name}
 							</ActiveLink>
