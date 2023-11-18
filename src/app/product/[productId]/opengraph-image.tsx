@@ -1,4 +1,4 @@
-import { ImageResponse } from "next/server";
+import { ImageResponse } from "next/og";
 import { type ProductPageProps } from "@/app/product/[productId]/page";
 import { getProductById } from "@/api/products";
 

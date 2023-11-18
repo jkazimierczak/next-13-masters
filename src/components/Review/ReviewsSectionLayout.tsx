@@ -1,6 +1,6 @@
 "use client";
 
-import React, { experimental_useOptimistic as useOptimistic, useRef } from "react";
+import React, { useOptimistic, useRef } from "react";
 import { type ReviewFormData, reviewFormDataSchema } from "@/api/review";
 import { handleReviewFormAction } from "@/app/product/[productId]/actions";
 import { Label } from "@/components/ui/label";
