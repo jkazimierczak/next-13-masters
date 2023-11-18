@@ -1,6 +1,6 @@
 "use client";
 
-import React, { experimental_useOptimistic as useOptimistic } from "react";
+import React, { useOptimistic } from "react";
 import { Button } from "@/components/ui/button";
 import { setProductQuantityAction } from "@/app/cart/actions";
 
