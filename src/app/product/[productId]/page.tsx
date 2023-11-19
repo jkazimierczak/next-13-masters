@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { type Metadata } from "next";
 import Link from "next/link";
-import React from "react";
+import React, { Suspense } from "react";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { ProductImage } from "@/features/ProductList/ProductImage";
 import { ProductList } from "@/features/ProductList/ProductList";
@@ -16,6 +16,7 @@ import { addProductToCartAction } from "@/app/cart/actions";
 import { getReviewsByProductId } from "@/api/review";
 import { ReviewsSectionLayout } from "@/components/Review/ReviewsSectionLayout";
 import { ReviewList } from "@/components/Review/ReviewList";
+import { ProductListSkeleton } from "@/features/ProductList/ProductListSkeleton";
 
 export type ProductPageProps = {
 	params: {
@@ -140,7 +141,9 @@ export default async function ProductPage({
 					</h3>
 					{/* TODO: Fix width alignment */}
 					<div className="mx-auto w-fit">
-						<ProductList products={similarProducts} data-testid="related-products" />
+						<Suspense fallback={<ProductListSkeleton />}>
+							<ProductList products={similarProducts} data-testid="related-products" />
+						</Suspense>
 					</div>
 				</>
 			)}
