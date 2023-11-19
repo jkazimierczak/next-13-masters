@@ -7,10 +7,12 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ReviewListItem } from "@/components/Review/ReviewListItem";
+import { ReviewList } from "@/components/Review/ReviewList";
 
 type ReviewSectionLayoutProps = {
 	productId: string;
-	children: React.ReactNode;
+	reviewsListElement: React.ReactNode;
+	reviewsCount: number;
 };
 
 function isOptimisticReviewValid(review: ReviewFormData) {
@@ -20,7 +22,8 @@ function isOptimisticReviewValid(review: ReviewFormData) {
 
 export function ReviewsSectionLayout({
 	productId,
-	children: reviewListChildren,
+	reviewsListElement,
+	reviewsCount,
 }: ReviewSectionLayoutProps) {
 	const [optimisticReview, setOptimisticReview] = useOptimistic<ReviewFormData>({
 		productId: productId,
@@ -120,7 +123,11 @@ export function ReviewsSectionLayout({
 						<ReviewListItem review={{ id: "", ...optimisticReview }} />
 					</div>
 				)}
-				{reviewListChildren}
+				{!isOptimisticReviewValid(optimisticReview) && reviewsCount === 0 ? (
+					<p>This product has no reviews</p>
+				) : (
+					reviewsListElement
+				)}
 			</div>
 		</div>
 	);
