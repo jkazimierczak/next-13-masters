@@ -6,7 +6,12 @@ const isProduction = process.env.NODE_ENV === "production";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ["media.graphassets.com"],
+        remotePatterns: [
+            {
+                protocol: "https",
+                hostname: "media.graphassets.com",
+            }
+        ],
     },
     pageExtensions: ["ts", "tsx", "mdx"],
     experimental: {
