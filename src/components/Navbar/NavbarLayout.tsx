@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
@@ -11,6 +11,7 @@ import { useToggle } from "@/hooks/useToggle";
 import { ScreenMarginLayout } from "@/components/Layouts/ScreenMarginLayout";
 import { cn } from "@/lib/utils";
 import { NavbarMenu } from "@/components/Navbar/NavbarMenu";
+import { SearchSkeleton } from "@/components/Navbar/SearchSkeleton";
 
 type NavbarLayoutProps = {
 	cartNode: React.ReactNode;
@@ -44,7 +45,9 @@ export function NavbarLayout({ cartNode }: NavbarLayoutProps) {
 
 				<div className="flex items-center gap-3">
 					<div className="flex-shrink">
-						<Search />
+						<Suspense fallback={<SearchSkeleton />}>
+							<Search />
+						</Suspense>
 					</div>
 					{cartNode}
 					<Button onClick={toggleMenuOpen} size="icon" className="flex-shrink-0 md:hidden">

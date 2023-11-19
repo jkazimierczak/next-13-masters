@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { type Metadata } from "next";
+import { Suspense } from "react";
 import { ProductList } from "@/features/ProductList/ProductList";
 import { getProducts, getProductsCount } from "@/api/products";
 import { Pagination } from "@/features/Pagination";
@@ -7,6 +8,8 @@ import { itemsPerPage, maxSSGPages } from "@/constants";
 import { getPagesCount } from "@/features/Pagination/getPageCount";
 import { ProductSortSelect } from "@/components/ProductSort/ProductSortSelect";
 import { type ProductOrderByInput } from "@/gql/graphql";
+import { ProductSortSkeleton } from "@/components/ProductSort/ProductSortSkeleton";
+import { PaginationSkeleton } from "@/features/Pagination/PaginationSkeleton";
 
 type ProductsPageProps = {
 	params: {
@@ -51,25 +54,31 @@ export default async function ProductsPage({
 				<header className="mb-4 flex items-center justify-between">
 					<h1 className="border-b border-secondary text-3xl font-bold">Vinyl Records</h1>
 					<div className="flex items-center gap-4">
-						<ProductSortSelect />
+						<Suspense fallback={<ProductSortSkeleton />}>
+							<ProductSortSelect />
+						</Suspense>
 						<div className="hidden sm:block">
-							<Pagination
-								currentPage={pageNum}
-								itemsPerPage={itemsPerPage}
-								totalItems={totalProductCount}
-								link={"/products"}
-							/>
+							<Suspense fallback={<PaginationSkeleton />}>
+								<Pagination
+									currentPage={pageNum}
+									itemsPerPage={itemsPerPage}
+									totalItems={totalProductCount}
+									link={"/products"}
+								/>
+							</Suspense>
 						</div>
 					</div>
 				</header>
 				<ProductList products={products} data-testid="products-list" />
 				<div className="mt-4 flex justify-center">
-					<Pagination
-						currentPage={pageNum}
-						itemsPerPage={itemsPerPage}
-						totalItems={totalProductCount}
-						link={"/products"}
-					/>
+					<Suspense fallback={<PaginationSkeleton />}>
+						<Pagination
+							currentPage={pageNum}
+							itemsPerPage={itemsPerPage}
+							totalItems={totalProductCount}
+							link={"/products"}
+						/>
+					</Suspense>
 				</div>
 			</div>
 		</main>
