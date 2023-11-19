@@ -148,14 +148,11 @@ export default async function ProductPage({
 				</>
 			)}
 
-			<ReviewsSectionLayout productId={productId}>
-				{/* TODO: Handle first-review */}
-				{reviews.length === 0 && <p>This product has no reviews</p>}
-
-				<div>
-					<ReviewList reviews={reviews} />
-				</div>
-			</ReviewsSectionLayout>
+			<ReviewsSectionLayout
+				productId={productId}
+				reviewsListElement={<ReviewList reviews={reviews} />}
+				reviewsCount={reviews.length}
+			/>
 		</>
 	);
 }
