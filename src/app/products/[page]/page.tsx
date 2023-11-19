@@ -36,13 +36,14 @@ export default async function ProductsPage({
 	searchParams: { sort },
 }: ProductsPageProps) {
 	const pageNum = Number(page);
+	const totalProductCount = await getProductsCount();
+	const pages = getPagesCount(totalProductCount, itemsPerPage);
 
-	if (pageNum <= 0 || isNaN(pageNum)) {
+	if (pageNum <= 0 || isNaN(pageNum) || pageNum > pages) {
 		notFound();
 	}
 
 	const products = await getProducts(pageNum, sort);
-	const totalProductCount = await getProductsCount();
 
 	return (
 		<main className="mx-auto max-w-screen-2xl p-8">
