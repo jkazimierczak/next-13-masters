@@ -1,4 +1,4 @@
-mutation ReviewsUpdateProductAverageRating($productId: ID!, $averageRating: Int!) {
+mutation ReviewsUpdateProductAverageRating($productId: ID!, $averageRating: Float!) {
 	updateProduct(where: { id: $productId }, data: { averageRating: $averageRating }) {
 		averageRating
 	}
