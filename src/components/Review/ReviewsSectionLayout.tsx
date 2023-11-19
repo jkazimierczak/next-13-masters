@@ -5,9 +5,8 @@ import { type ReviewFormData, reviewFormDataSchema } from "@/api/review";
 import { handleReviewFormAction } from "@/app/product/[productId]/actions";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { ReviewListItem } from "@/components/Review/ReviewListItem";
-import { ReviewList } from "@/components/Review/ReviewList";
+import { AddReviewButton } from "@/components/Review/AddReviewButton";
 
 type ReviewSectionLayoutProps = {
 	productId: string;
@@ -93,7 +92,7 @@ export function ReviewsSectionLayout({
 					</Label>
 					<Input ref={emailRef} className="mb-2" type="email" name="email" id="email" required />
 
-					<Button
+					<AddReviewButton
 						className="mt-2 w-full"
 						formAction={async () => {
 							const newReview = {
@@ -111,15 +110,13 @@ export function ReviewsSectionLayout({
 								await handleReviewFormAction(newReview);
 							}
 						}}
-					>
-						Add review
-					</Button>
+					/>
 				</form>
 			</div>
 			<div className="w-2/3">
 				<h2 className="mb-4 text-4xl font-bold">Reviews</h2>
 				{isOptimisticReviewValid(optimisticReview) && (
-					<div className="animate-pulse">
+					<div className="mb-6 animate-pulse">
 						<ReviewListItem review={{ id: "", ...optimisticReview }} />
 					</div>
 				)}
