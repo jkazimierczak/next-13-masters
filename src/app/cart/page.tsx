@@ -15,12 +15,13 @@ export default async function CartPage() {
 
 	if (!cart || !cart.orderItems.length) {
 		return (
-			<div>
+			<>
+				<h1 className="mb-4 w-fit border-b border-secondary text-3xl font-bold">Your Cart</h1>
 				<p className="mb-4">Your cart is empty, but you can change this!</p>
-				<Button>
+				<Button asChild>
 					<Link href={"/products/1"}>Browse all products</Link>
 				</Button>
-			</div>
+			</>
 		);
 	}
 
@@ -28,23 +29,26 @@ export default async function CartPage() {
 	const validOrderItems = cart.orderItems.filter((orderItem) => !!orderItem.product);
 
 	return (
-		<div className="flex h-full flex-col justify-between xl:flex-row xl:gap-16">
-			<div className="mb-10 flex-grow">
-				<CartItemList orderItems={validOrderItems} />
-			</div>
+		<>
+			<h1 className="mb-4 w-fit border-b border-secondary text-3xl font-bold">Your Cart</h1>
+			<div className="flex h-full flex-col justify-between xl:flex-row xl:gap-16">
+				<div className="mb-10 flex-grow">
+					<CartItemList orderItems={validOrderItems} />
+				</div>
 
-			<div className="h-fit rounded border-neutral-300 xl:border xl:p-4">
-				<p className="mb-2 flex justify-between">
-					<span>Total to pay:</span>
-					<span className="font-bold">{formatPrice(totalCartValue)}</span>
-				</p>
-				<form action={handlePaymentAction} className="mb-2">
-					<Button className="w-full">Proceed to pay</Button>
-				</form>
-				<p className="text-center text-sm text-neutral-500">
-					Payments are securely processed by Stripe.
-				</p>
+				<div className="h-fit rounded border-neutral-300 xl:border xl:p-4">
+					<p className="mb-2 flex justify-between">
+						<span>Total to pay:</span>
+						<span className="font-bold">{formatPrice(totalCartValue)}</span>
+					</p>
+					<form action={handlePaymentAction} className="mb-2">
+						<Button className="w-full">Proceed to pay</Button>
+					</form>
+					<p className="text-center text-sm text-neutral-500">
+						Payments are securely processed by Stripe.
+					</p>
+				</div>
 			</div>
-		</div>
+		</>
 	);
 }

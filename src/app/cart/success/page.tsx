@@ -17,7 +17,7 @@ export default async function CartSuccessPage({ searchParams }: CartSuccessPageP
 
 	return (
 		<div>
-			<h2>Payment status</h2>p
+			<h2 className="mb-4 w-fit border-b border-secondary text-3xl font-bold">Payment status</h2>
 			<p>
 				{session.payment_status === "paid" &&
 					"Well done! We received your payment and will ship the records to you ASAP."}
