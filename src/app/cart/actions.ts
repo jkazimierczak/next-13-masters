@@ -1,6 +1,6 @@
 "use server";
 
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { itemIdFormDataSchema, itemSetQuantityFormDataSchema } from "@/app/cart/actionsSchema";
 import { addToCart, getCart, removeProductFromCart, setProductQuantityInCart } from "@/api/cart";
@@ -46,6 +46,7 @@ export async function handlePaymentAction(_formData: FormData) {
 		return;
 	}
 
+	const origin = headers().get("origin");
 	const checkoutSession = await stripe.checkout.sessions.create({
 		mode: "payment",
 		payment_method_types: ["card", "paypal", "blik"],
@@ -62,8 +63,8 @@ export async function handlePaymentAction(_formData: FormData) {
 			},
 			quantity: item.quantity,
 		})),
-		success_url: "http://localhost:3000/cart/success?sessionId={CHECKOUT_SESSION_ID}",
-		cancel_url: "http://localhost:3000/cart/cancel?sessionId={CHECKOUT_SESSION_ID}",
+		success_url: `${origin}/cart/success?sessionId={CHECKOUT_SESSION_ID}`,
+		cancel_url: `${origin}/cart/cancel?sessionId={CHECKOUT_SESSION_ID}`,
 	});
 
 	if (!checkoutSession.url) {
