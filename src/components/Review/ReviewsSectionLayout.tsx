@@ -32,6 +32,7 @@ export function ReviewsSectionLayout({
 		name: "",
 		email: "",
 	});
+	const formRef = useRef<HTMLFormElement>(null);
 	const headlineRef = useRef<HTMLInputElement>(null);
 	const contentRef = useRef<HTMLInputElement>(null);
 	const ratingRef = useRef<HTMLInputElement>(null);
@@ -46,7 +47,7 @@ export function ReviewsSectionLayout({
 					{"You own the record already? That's cool! Give a word to other users about it:"}
 				</p>
 
-				<form data-testid="add-review-form">
+				<form data-testid="add-review-form" ref={formRef}>
 					<input type="text" name="productId" value={productId} readOnly hidden />
 					<Label htmlFor="headline" className="text-md mb-1 block">
 						Headline
@@ -108,6 +109,7 @@ export function ReviewsSectionLayout({
 							if (isValid) {
 								setOptimisticReview(newReview);
 								await handleReviewFormAction(newReview);
+								formRef.current?.reset();
 							}
 						}}
 					/>
