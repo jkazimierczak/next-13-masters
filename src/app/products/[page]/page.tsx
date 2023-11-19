@@ -48,6 +48,17 @@ export default async function ProductsPage({
 
 	const products = await getProducts(pageNum, sort);
 
+	const pagination = (
+		<Suspense fallback={<PaginationSkeleton />}>
+			<Pagination
+				currentPage={pageNum}
+				itemsPerPage={itemsPerPage}
+				totalItems={totalProductCount}
+				link={"/products"}
+			/>
+		</Suspense>
+	);
+
 	return (
 		<main className="mx-auto max-w-screen-2xl p-8">
 			<div className="mx-auto w-fit">
@@ -57,29 +68,11 @@ export default async function ProductsPage({
 						<Suspense fallback={<ProductSortSkeleton />}>
 							<ProductSortSelect />
 						</Suspense>
-						<div className="hidden sm:block">
-							<Suspense fallback={<PaginationSkeleton />}>
-								<Pagination
-									currentPage={pageNum}
-									itemsPerPage={itemsPerPage}
-									totalItems={totalProductCount}
-									link={"/products"}
-								/>
-							</Suspense>
-						</div>
+						<div className="hidden sm:block">{pagination}</div>
 					</div>
 				</header>
 				<ProductList products={products} data-testid="products-list" />
-				<div className="mt-4 flex justify-center">
-					<Suspense fallback={<PaginationSkeleton />}>
-						<Pagination
-							currentPage={pageNum}
-							itemsPerPage={itemsPerPage}
-							totalItems={totalProductCount}
-							link={"/products"}
-						/>
-					</Suspense>
-				</div>
+				<div className="mt-4 flex justify-center">{pagination}</div>
 			</div>
 		</main>
 	);
