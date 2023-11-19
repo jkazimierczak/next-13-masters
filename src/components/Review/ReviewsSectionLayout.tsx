@@ -39,8 +39,8 @@ export function ReviewsSectionLayout({
 	const emailRef = useRef<HTMLInputElement>(null);
 
 	return (
-		<div className="mt-10 flex gap-10">
-			<div className="w-1/3">
+		<div className="mt-10 flex flex-col gap-10 lg:flex-row">
+			<div className="lg:w-1/3">
 				<h2 className="mb-4 text-4xl font-bold">Add review</h2>
 				<p className="mb-4">
 					{"You own the record already? That's cool! Give a word to other users about it:"}
@@ -113,7 +113,7 @@ export function ReviewsSectionLayout({
 					/>
 				</form>
 			</div>
-			<div className="w-2/3">
+			<div className="lg:w-2/3">
 				<h2 className="mb-4 text-4xl font-bold">Reviews</h2>
 				{isOptimisticReviewValid(optimisticReview) && (
 					<div className="mb-6 animate-pulse">
