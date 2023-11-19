@@ -63,7 +63,7 @@ export async function handlePaymentAction(_formData: FormData) {
 			},
 			quantity: item.quantity,
 		})),
-		success_url: `${origin}/cart/success?sessionId={CHECKOUT_SESSION_ID}`,
+		success_url: `${origin}/cart/success/callback?sessionId={CHECKOUT_SESSION_ID}`,
 		cancel_url: `${origin}/cart/cancel?sessionId={CHECKOUT_SESSION_ID}`,
 	});
 
@@ -71,6 +71,5 @@ export async function handlePaymentAction(_formData: FormData) {
 		throw new Error("Something went wrong");
 	}
 
-	cookies().set("cartId", "");
 	redirect(checkoutSession.url);
 }
