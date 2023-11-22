@@ -55,7 +55,6 @@ export default async function ProductPage({
 
 	const isRegularEdition = product.regularEdition === null;
 	const isDeluxeEdition = product.deluxeEdition === null;
-	// console.log("isDeluxe", !!product.regularEdition, "isRegular", !!product.deluxeEdition);
 	const deluxeEditionHref = isDeluxeEdition
 		? "#"
 		: (`/product/${product.deluxeEdition?.id}` as const);

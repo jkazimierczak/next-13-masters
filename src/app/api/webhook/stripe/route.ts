@@ -18,7 +18,6 @@ export async function POST(request: NextRequest): Promise<Response> {
 
 	switch (event.type) {
 		case "checkout.session.completed": {
-			console.log("checkout.session.completed::metadata", event.data.object.metadata);
 		}
 		case "checkout.session.expired": {
 		}

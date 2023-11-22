@@ -20,8 +20,6 @@ export const reviewFormDataSchema = z.object({
 export type ReviewFormData = z.infer<typeof reviewFormDataSchema>;
 
 export async function addReview(review: ReviewFormData) {
-	console.log(review);
-
 	return executeGraphQL({
 		query: ReviewAddDocument,
 		variables: {

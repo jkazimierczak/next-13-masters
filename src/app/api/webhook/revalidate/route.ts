@@ -29,8 +29,6 @@ export async function POST(request: NextRequest): Promise<Response> {
 		revalidatePath("/products");
 		revalidatePath(`/product/${payload.data.id}`);
 
-		console.log(`hook:revalidate /product/${payload.data.id}`);
-
 		return new Response(null, { status: 204 });
 	}
 
