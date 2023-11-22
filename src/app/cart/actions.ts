@@ -1,6 +1,6 @@
 "use server";
 
-import { cookies, headers } from "next/headers";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { itemIdFormDataSchema, itemSetQuantityFormDataSchema } from "@/app/cart/actionsSchema";
 import { addToCart, getCart, removeProductFromCart, setProductQuantityInCart } from "@/api/cart";
@@ -58,6 +58,7 @@ export async function handlePaymentAction(_formData: FormData) {
 				currency: "pln",
 				product_data: {
 					name: item.product?.name || "",
+					images: item.product?.images ? item.product?.images.map((image) => image.url) : undefined,
 				},
 				unit_amount: item.product?.price || 0,
 			},
