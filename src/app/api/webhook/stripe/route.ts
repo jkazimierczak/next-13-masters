@@ -1,6 +1,4 @@
-/// <reference types="stripe-event-types" />
 import { type NextRequest } from "next/server";
-import type Stripe from "stripe";
 import { createStripeInstance } from "@/lib/stripe";
 import { env } from "@/env.mjs";
 
@@ -16,7 +14,7 @@ export async function POST(request: NextRequest): Promise<Response> {
 		await request.text(),
 		signature,
 		env.STRIPE_WEBHOOK_SECRET,
-	) as Stripe.DiscriminatedEvent;
+	);
 
 	switch (event.type) {
 		case "checkout.session.completed": {
