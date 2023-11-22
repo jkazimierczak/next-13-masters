@@ -63,8 +63,8 @@ export async function handlePaymentAction(_formData: FormData) {
 			},
 			quantity: item.quantity,
 		})),
-		success_url: `${origin}/cart/success/callback?sessionId={CHECKOUT_SESSION_ID}`,
-		cancel_url: `${origin}/cart/cancel?sessionId={CHECKOUT_SESSION_ID}`,
+		success_url: `${origin}/api/cart/success?sessionId={CHECKOUT_SESSION_ID}`,
+		cancel_url: `${origin}/api/cart/cancel?sessionId={CHECKOUT_SESSION_ID}`,
 	});
 
 	if (!checkoutSession.url) {
