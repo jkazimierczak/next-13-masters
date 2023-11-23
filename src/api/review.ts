@@ -5,6 +5,7 @@ import {
 	ReviewAddDocument,
 	ReviewsGetRatingAndCountByProductIdDocument,
 	ReviewsUpdateProductAverageRatingDocument,
+	ReviewPublishDocument,
 } from "@/gql/graphql";
 import { FetchTag } from "@/lib/fetchtag";
 
@@ -20,7 +21,7 @@ export const reviewFormDataSchema = z.object({
 export type ReviewFormData = z.infer<typeof reviewFormDataSchema>;
 
 export async function addReview(review: ReviewFormData) {
-	return executeGraphQL({
+	const res = await executeGraphQL({
 		query: ReviewAddDocument,
 		variables: {
 			...review,
@@ -29,6 +30,17 @@ export async function addReview(review: ReviewFormData) {
 			tags: [FetchTag.REVIEWS],
 		},
 	});
+
+	if (res.createReview?.id) {
+		await executeGraphQL({
+			query: ReviewPublishDocument,
+			variables: {
+				reviewId: res.createReview.id,
+			},
+		});
+	}
+	
+	return res;
 }
 
 export async function getReviewsByProductId(productId: string) {
