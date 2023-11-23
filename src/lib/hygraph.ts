@@ -6,7 +6,7 @@ import { InvalidApiRequestError } from "@/lib/error";
 export async function getRequestBody(request: NextRequest) {
 	const signature = request.headers.get("gcms-signature");
 	if (!signature) {
-		throw new InvalidApiRequestError("Invalid signature");
+		throw new InvalidApiRequestError("Missing signature");
 	}
 
 	let body: unknown;
