@@ -1,6 +1,8 @@
 import { type NextRequest } from "next/server";
+import { revalidateTag } from "next/cache";
 import { getRequestBody } from "@/lib/hygraph";
 import { InvalidApiRequestError } from "@/lib/error";
+import { FetchTag } from "@/lib/fetchtag";
 
 export function withSignatureValidation(
 	handler: (request: NextRequest, body: unknown) => Promise<Response>,
@@ -19,4 +21,16 @@ export function withSignatureValidation(
 
 		return handler(request, body);
 	};
+}
+
+type AsyncFunction = () => Promise<void>;
+
+export async function withRevalidate<T extends AsyncFunction>(func: T, tag: string) {
+	await func();
+
+	revalidateTag(tag);
+}
+
+export async function withRevalidateCart<T extends AsyncFunction>(func: T) {
+	return withRevalidate(func, FetchTag.CART);
 }

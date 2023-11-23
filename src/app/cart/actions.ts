@@ -4,8 +4,8 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { itemIdFormDataSchema, itemSetQuantityFormDataSchema } from "@/app/cart/actionsSchema";
 import { addToCart, getCart, removeProductFromCart, setProductQuantityInCart } from "@/api/cart";
-import { withRevalidateCart } from "@/lib/utils";
 import { createStripeInstance } from "@/lib/stripe";
+import { withRevalidateCart } from "@/lib/decorators";
 
 export async function addProductToCartAction(formData: FormData) {
 	return withRevalidateCart(async () => {
