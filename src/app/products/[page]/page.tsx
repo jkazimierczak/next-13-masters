@@ -1,15 +1,15 @@
 import { notFound } from "next/navigation";
 import { type Metadata } from "next";
 import { Suspense } from "react";
-import { ProductList } from "@/features/ProductList/ProductList";
+import { Pagination } from "@/components/Pagination";
+import { ProductList } from "@/components/ProductList/ProductList";
 import { getProducts, getProductsCount } from "@/api/products";
-import { Pagination } from "@/features/Pagination";
 import { itemsPerPage, maxSSGPages } from "@/constants";
-import { getPagesCount } from "@/features/Pagination/getPageCount";
+import { getPagesCount } from "@/components/Pagination/getPageCount";
 import { ProductSortSelect } from "@/components/ProductSort/ProductSortSelect";
 import { type ProductOrderByInput } from "@/gql/graphql";
 import { ProductSortSkeleton } from "@/components/ProductSort/ProductSortSkeleton";
-import { PaginationSkeleton } from "@/features/Pagination/PaginationSkeleton";
+import { PaginationSkeleton } from "@/components/Pagination/PaginationSkeleton";
 
 type ProductsPageProps = {
 	params: {

@@ -3,7 +3,7 @@
 import { type Route } from "next";
 import Link from "next/link";
 import React from "react";
-import { useActiveLink } from "@/features/ActiveLink/useActiveLink";
+import { useActiveLink } from "@/components/ActiveLink/useActiveLink";
 import { cn } from "@/lib/utils";
 
 type ActiveLinkProps<T extends string> = {

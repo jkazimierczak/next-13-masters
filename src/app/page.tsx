@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { ArrowRight, ChevronsRight, Disc3 } from "lucide-react";
 import Link from "next/link";
-import { ProductList } from "@/features/ProductList/ProductList";
+import { ProductList } from "@/components/ProductList/ProductList";
 import { getProducts } from "@/api/products";
 import { Button } from "@/components/ui/button";
 

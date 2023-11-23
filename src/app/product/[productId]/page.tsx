@@ -3,8 +3,8 @@ import { type Metadata } from "next";
 import Link from "next/link";
 import React, { Suspense } from "react";
 import { MDXRemote } from "next-mdx-remote/rsc";
-import { ProductImage } from "@/features/ProductList/ProductImage";
-import { ProductList } from "@/features/ProductList/ProductList";
+import { ProductImage } from "@/components/ProductList/ProductImage";
+import { ProductList } from "@/components/ProductList/ProductList";
 import { getProductById, getSimilarProducts } from "@/api/products";
 import { formatPrice, prepareImageProps } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -16,7 +16,7 @@ import { addProductToCartAction } from "@/app/cart/actions";
 import { getReviewsByProductId } from "@/api/review";
 import { ReviewsSectionLayout } from "@/components/Review/ReviewsSectionLayout";
 import { ReviewList } from "@/components/Review/ReviewList";
-import { ProductListSkeleton } from "@/features/ProductList/ProductListSkeleton";
+import { ProductListSkeleton } from "@/components/ProductList/ProductListSkeleton";
 
 export type ProductPageProps = {
 	params: {

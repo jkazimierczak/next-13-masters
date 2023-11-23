@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 import { type Metadata } from "next";
+import { Pagination } from "@/components/Pagination";
 import { getProductsByCategorySlug, getProductsCountByCategorySlug } from "@/api/products";
-import { Pagination } from "@/features/Pagination";
-import { ProductList } from "@/features/ProductList/ProductList";
+import { ProductList } from "@/components/ProductList/ProductList";
 import { itemsPerPage } from "@/constants";
 import { getCategoryNameBySlug } from "@/api/category";
 

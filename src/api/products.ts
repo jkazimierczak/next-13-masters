@@ -1,4 +1,4 @@
-import { type Product } from "@/features/ProductList/types";
+import { type Product } from "@/components/ProductList/types";
 import { executeGraphQL } from "@/api/graphql";
 import {
 	ProductGetByIdDocument,

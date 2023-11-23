@@ -1,5 +1,5 @@
 import { type Route } from "next";
-import { ActiveLink } from "@/features/ActiveLink/ActiveLink";
+import { ActiveLink } from "@/components/ActiveLink/ActiveLink";
 
 type NavbarMenuProps = {
 	links: { href: Route; name: string; exact: boolean }[];

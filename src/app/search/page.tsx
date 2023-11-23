@@ -1,5 +1,5 @@
 import { getProductsBySearch } from "@/api/products";
-import { ProductList } from "@/features/ProductList/ProductList";
+import { ProductList } from "@/components/ProductList/ProductList";
 
 type SearchPageProps = {
 	searchParams: {

@@ -5,7 +5,7 @@ import { clsx } from "clsx";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { type Route } from "next";
 import { useSearchParams } from "next/navigation";
-import { getPagesCount } from "@/features/Pagination/getPageCount";
+import { getPagesCount } from "@/components/Pagination/getPageCount";
 import { defaultSortOrder } from "@/components/ProductSort/ProductSortSelect";
 
 export type PaginationProps<T extends string> = {
