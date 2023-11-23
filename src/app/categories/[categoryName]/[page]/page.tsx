@@ -5,11 +5,15 @@ import { getCategoryNameBySlug } from "@/api/category";
 import { ProductPageListing } from "@/components/Layouts/ProductPageListing";
 import { getPagesCount } from "@/components/Pagination/getPageCount";
 import { itemsPerPage } from "@/constants";
+import { type ProductOrderByInput } from "@/gql/graphql";
 
 type CategoryPageParams = {
 	params: {
 		categoryName: string;
 		page: string;
+	};
+	searchParams: {
+		sort?: ProductOrderByInput;
 	};
 };
 
@@ -23,7 +27,10 @@ export async function generateMetadata({
 	};
 }
 
-export default async function CategoryPage({ params: { page, categoryName } }: CategoryPageParams) {
+export default async function CategoryPage({
+	params: { page, categoryName },
+	searchParams: { sort },
+}: CategoryPageParams) {
 	const pageNum = Number(page);
 	const totalProductCount = await getProductsCountByCategorySlug(categoryName);
 	const pages = getPagesCount(totalProductCount, itemsPerPage);
@@ -32,7 +39,7 @@ export default async function CategoryPage({ params: { page, categoryName } }: C
 		notFound();
 	}
 
-	const products = await getProductsByCategorySlug(categoryName, pageNum);
+	const products = await getProductsByCategorySlug(categoryName, pageNum, sort);
 	if (!products) {
 		notFound();
 	}

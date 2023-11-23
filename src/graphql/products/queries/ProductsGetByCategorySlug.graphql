@@ -1,10 +1,10 @@
-query ProductsGetByCollectionSlug(
+query ProductsGetByCategorySlug(
 	$slug: String!
 	$count: Int
 	$offset: Int
 	$orderBy: ProductOrderByInput
 ) {
-	collections(where: { slug: $slug }) {
+	genres(where: { slug: $slug }) {
 		products(first: $count, skip: $offset, orderBy: $orderBy) {
 			...ProductListItem
 		}

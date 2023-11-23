@@ -4,8 +4,8 @@ import {
 	ProductGetByIdDocument,
 	type ProductOrderByInput,
 	ProductPublishDocument,
+	ProductsGetByCategorySlugDocument,
 	ProductsGetByCollectionSlugDocument,
-	ProductsGetByGenreSlugDocument,
 	ProductsGetByIdsDocument,
 	ProductsGetCountByCollectionSlugDocument,
 	ProductsGetCountByGenreSlugDocument,
@@ -71,12 +71,14 @@ export async function getProductsBySearch(query: string): Promise<Product[]> {
 export async function getProductsByCategorySlug(
 	slug: string,
 	page: number,
+	orderBy?: ProductOrderByInput,
 ): Promise<Product[] | null> {
 	const gqlRes = await executeGraphQL({
-		query: ProductsGetByGenreSlugDocument,
+		query: ProductsGetByCategorySlugDocument,
 		variables: {
 			slug,
 			...preparePaginationArgs(page),
+			orderBy,
 		},
 	});
 
@@ -90,12 +92,14 @@ export async function getProductsByCategorySlug(
 export async function getProductsByCollectionSlug(
 	slug: string,
 	page: number,
+	orderBy?: ProductOrderByInput,
 ): Promise<Product[] | null> {
 	const gqlRes = await executeGraphQL({
 		query: ProductsGetByCollectionSlugDocument,
 		variables: {
 			slug,
 			...preparePaginationArgs(page),
+			orderBy,
 		},
 	});
 

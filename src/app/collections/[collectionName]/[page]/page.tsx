@@ -5,11 +5,15 @@ import { itemsPerPage } from "@/constants";
 import { getCollectionNameBySlug } from "@/api/collection";
 import { ProductPageListing } from "@/components/Layouts/ProductPageListing";
 import { getPagesCount } from "@/components/Pagination/getPageCount";
+import { type ProductOrderByInput } from "@/gql/graphql";
 
 type CollectionPageParams = {
 	params: {
 		collectionName: string;
 		page: string;
+	};
+	searchParams: {
+		sort?: ProductOrderByInput;
 	};
 };
 
@@ -25,6 +29,7 @@ export async function generateMetadata({
 
 export default async function CollectionPage({
 	params: { page, collectionName },
+	searchParams: { sort },
 }: CollectionPageParams) {
 	const pageNum = Number(page);
 	const totalProductCount = await getProductsCountByCollectionSlug(collectionName);
@@ -34,7 +39,7 @@ export default async function CollectionPage({
 		notFound();
 	}
 
-	const products = await getProductsByCollectionSlug(collectionName, pageNum);
+	const products = await getProductsByCollectionSlug(collectionName, pageNum, sort);
 	if (!products) {
 		notFound();
 	}
