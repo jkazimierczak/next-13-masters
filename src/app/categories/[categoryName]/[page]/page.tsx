@@ -1,10 +1,10 @@
 import { notFound } from "next/navigation";
 import { type Metadata } from "next";
-import { Pagination } from "@/components/Pagination/Pagination";
 import { getProductsByCategorySlug, getProductsCountByCategorySlug } from "@/api/products";
-import { ProductList } from "@/components/ProductList/ProductList";
-import { itemsPerPage } from "@/constants";
 import { getCategoryNameBySlug } from "@/api/category";
+import { ProductPageListing } from "@/components/Layouts/ProductPageListing";
+import { getPagesCount } from "@/components/Pagination/getPageCount";
+import { itemsPerPage } from "@/constants";
 
 type CategoryPageParams = {
 	params: {
@@ -25,43 +25,25 @@ export async function generateMetadata({
 
 export default async function CategoryPage({ params: { page, categoryName } }: CategoryPageParams) {
 	const pageNum = Number(page);
+	const totalProductCount = await getProductsCountByCategorySlug(categoryName);
+	const pages = getPagesCount(totalProductCount, itemsPerPage);
 
-	if (pageNum <= 0 || isNaN(pageNum)) {
+	if (pageNum <= 0 || isNaN(pageNum) || pageNum > pages) {
 		notFound();
 	}
 
-	const prettyCategoryName = await getCategoryNameBySlug(categoryName);
 	const products = await getProductsByCategorySlug(categoryName, pageNum);
 	if (!products) {
 		notFound();
 	}
-
-	const totalProductCount = await getProductsCountByCategorySlug(categoryName);
+	const prettyCategoryName = await getCategoryNameBySlug(categoryName);
 
 	return (
-		<main className="mx-auto max-w-screen-2xl p-8">
-			<div className="mx-auto w-fit">
-				<header className="mb-4 flex items-center justify-between">
-					<h1 className="border-b border-secondary text-3xl font-bold">{prettyCategoryName}</h1>
-					<div className="hidden sm:block">
-						<Pagination
-							currentPage={pageNum}
-							itemsPerPage={itemsPerPage}
-							totalItems={totalProductCount}
-							link={`/categories/${categoryName}`}
-						/>
-					</div>
-				</header>
-				<ProductList products={products} data-testid="products-list" />
-				<div className="mt-4 flex justify-center">
-					<Pagination
-						currentPage={pageNum}
-						itemsPerPage={itemsPerPage}
-						totalItems={totalProductCount}
-						link={`/categories/${categoryName}`}
-					/>
-				</div>
-			</div>
-		</main>
+		<ProductPageListing
+			title={prettyCategoryName ?? "Vinyl Records"}
+			page={pageNum}
+			totalProductCount={totalProductCount}
+			products={products}
+		/>
 	);
 }
