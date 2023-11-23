@@ -1,5 +1,6 @@
 import { type NextRequest } from "next/server";
 import { z } from "zod";
+import { verifyWebhookSignature } from "@hygraph/utils";
 import { algoliaIndex, mapProductToAlgoliaRecord } from "@/lib/algolia";
 import { getProductById } from "@/api/products";
 import { env } from "@/env.mjs";
@@ -12,9 +13,9 @@ const addProductSchema = z.object({
 });
 
 export async function POST(request: NextRequest): Promise<Response> {
-	const requestKey = request.headers.get("X-API-KEY");
-	if (requestKey !== env.WEBHOOK_SECRET) {
-		return new Response("Invalid credentials", { status: 401 });
+	const signature = request.headers.get("gcms-signature");
+	if (!signature) {
+		return new Response("Invalid signature", { status: 401 });
 	}
 
 	let body: unknown;
@@ -22,6 +23,11 @@ export async function POST(request: NextRequest): Promise<Response> {
 		body = await request.json();
 	} catch (err) {
 		return new Response("Invalid request body", { status: 500 });
+	}
+
+	const isValid = verifyWebhookSignature({ body, signature, secret: env.WEBHOOK_SECRET });
+	if (!isValid) {
+		return new Response("Invalid signature", { status: 401 });
 	}
 
 	const parsed = await addProductSchema.safeParseAsync(body);
