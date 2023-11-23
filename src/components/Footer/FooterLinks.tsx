@@ -1,17 +1,15 @@
-import { ActiveLink } from "@/components/ActiveLink/ActiveLink";
+"use client";
+
+import { FooterActiveLink } from "@/components/Footer/FooterActiveLink";
 
 export function FooterLinks() {
 	return (
 		<ul className="mb-1 flex items-center justify-center gap-2">
 			<li>
-				<ActiveLink href="/policies/privacy" exact={true}>
-					Privacy policy
-				</ActiveLink>
+				<FooterActiveLink href="/policies/privacy">Privacy policy</FooterActiveLink>
 			</li>
 			<li>
-				<ActiveLink href="/policies/terms" exact={true}>
-					Terms & conditions
-				</ActiveLink>
+				<FooterActiveLink href="/policies/terms">Terms & conditions</FooterActiveLink>
 			</li>
 		</ul>
 	);

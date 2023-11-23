@@ -6,7 +6,7 @@ import React from "react";
 import { useActiveLink } from "@/components/ActiveLink/useActiveLink";
 import { cn } from "@/lib/utils";
 
-type ActiveLinkProps<T extends string> = {
+export type ActiveLinkProps<T extends string> = {
 	children: React.ReactNode;
 	href: Route<T>;
 	exact: boolean;
@@ -27,7 +27,7 @@ export function ActiveLink<T extends string>({
 			aria-current={isActive ? true : undefined}
 			className={cn(
 				{
-					"min-w-fit": true,
+					"min-w-fit transition-colors duration-100 hover:text-primary": true,
 					"border-b border-primary text-primary": isActive,
 				},
 				className,
