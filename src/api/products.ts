@@ -34,7 +34,7 @@ function mapGqlProductsToProducts(products: ProductsGetQuery["products"]): Produ
 				src: img.url,
 				alt: p.name,
 			})),
-			averageRating: p.averageRating ?? undefined,
+			averageRating: p.averageRating ?? 0,
 		};
 	});
 }
