@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { type Metadata } from "next";
 import { Suspense } from "react";
-import { Pagination } from "@/components/Pagination";
+import { Pagination } from "@/components/Pagination/Pagination";
 import { ProductList } from "@/components/ProductList/ProductList";
 import { getProducts, getProductsCount } from "@/api/products";
 import { itemsPerPage, maxSSGPages } from "@/constants";
