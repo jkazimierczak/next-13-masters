@@ -4,7 +4,7 @@ import { FooterActiveLink } from "@/components/Footer/FooterActiveLink";
 
 export function FooterLinks() {
 	return (
-		<ul className="mb-1 flex items-center justify-center gap-2">
+		<ul className="mb-1 flex items-center justify-center gap-4">
 			<li>
 				<FooterActiveLink href="/policies/privacy">Privacy policy</FooterActiveLink>
 			</li>
