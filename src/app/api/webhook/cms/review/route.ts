@@ -1,5 +1,6 @@
 import { type NextRequest } from "next/server";
 import { z } from "zod";
+import { revalidatePath } from "next/cache";
 import { updateAverageProductRating } from "@/api/review";
 import { publishProduct } from "@/api/products";
 import { getRequestBody } from "@/lib/hygraph";
@@ -32,6 +33,9 @@ export async function POST(request: NextRequest): Promise<Response> {
 
 		await updateAverageProductRating(productId);
 		await publishProduct(productId);
+
+		revalidatePath("/products");
+		revalidatePath(`/product/${productId}`);
 
 		return new Response(null, { status: 204 });
 	}
