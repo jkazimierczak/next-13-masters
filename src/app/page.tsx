@@ -31,7 +31,7 @@ export default async function Homepage() {
 				fill
 			/>
 			<div className="mx-24 flex gap-6">
-				<ProductList products={products} showLess={true} data-testid="products-list" />
+				<ProductList products={products} data-testid="products-list" />
 				<Link
 					href={"/products/1"}
 					className="flex h-72 items-center justify-between rounded bg-background p-4 text-xl font-bold uppercase text-primary [writing-mode:vertical-rl]"
