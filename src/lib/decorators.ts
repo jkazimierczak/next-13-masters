@@ -3,6 +3,7 @@ import { revalidateTag } from "next/cache";
 import { getRequestBody } from "@/lib/hygraph";
 import { InvalidApiRequestError } from "@/lib/error";
 import { FetchTag } from "@/lib/fetchtag";
+import { isProduction } from "@/constants";
 
 export function withSignatureValidation(
 	handler: (request: NextRequest, body: unknown) => Promise<Response>,
@@ -10,7 +11,11 @@ export function withSignatureValidation(
 	return async (request: NextRequest): Promise<Response> => {
 		let body: unknown;
 		try {
-			body = await getRequestBody(request);
+			if (isProduction) {
+				body = await getRequestBody(request);
+			} else {
+				body = await request.json();
+			}
 		} catch (err) {
 			if (err instanceof InvalidApiRequestError) {
 				return new Response(err.message, { status: 400 });
