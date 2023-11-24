@@ -39,7 +39,7 @@ export async function addReview(review: ReviewFormData) {
 			},
 		});
 	}
-	
+
 	return res;
 }
 
@@ -66,7 +66,7 @@ export async function calculateAverageProductRatingById(productId: string) {
 	});
 	const totalRating = res.reviews.reduce((acc, review) => acc + (review.rating ?? 0), 0);
 	const reviewCount = res.reviewsConnection.aggregate.count;
-	return totalRating / reviewCount;
+	return reviewCount ? totalRating / reviewCount : 0;
 }
 
 export async function updateAverageProductRating(productId: string) {
